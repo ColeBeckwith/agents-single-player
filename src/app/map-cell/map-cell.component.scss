@@ -1,0 +1,17 @@
+:host {
+	height: 30px;
+	width: 30px;
+	margin: 2px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	color: white;
+
+	&.map-cell--built {
+		height: 28px;
+		width: 28px;
+		border: 1px solid white;
+		cursor: pointer;
+	}
+}
+

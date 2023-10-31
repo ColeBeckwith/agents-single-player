@@ -1,0 +1,47 @@
+<mat-accordion>
+	<mat-expansion-panel hideToggle>
+		<mat-expansion-panel-header>
+			<mat-panel-title> Selected Scenario </mat-panel-title>
+			<mat-panel-description>
+				{{
+					selectedScenario
+						? (selectedScenario | difficultyDisplay)
+						: "Random"
+				}}
+			</mat-panel-description>
+		</mat-expansion-panel-header>
+		<div class="scenario-container">
+			<button mat-button (click)="selectDifficulty(1)">Easy</button>
+			<button mat-button (click)="selectDifficulty(2)">Medium</button>
+			<button mat-button (click)="selectDifficulty(3)">Hard</button>
+		</div>
+	</mat-expansion-panel>
+</mat-accordion>
+<mat-accordion>
+	<mat-expansion-panel hideToggle>
+		<mat-expansion-panel-header>
+			<mat-panel-title> Selected Character </mat-panel-title>
+			<mat-panel-description>
+				{{ selectedCharacter ? selectedCharacter.displayName : "Random" }}
+			</mat-panel-description>
+		</mat-expansion-panel-header>
+		<div class="character-avatar-container">
+			<div *ngFor="let character of characters">
+				<img
+					class="character-avatar"
+					[class.character-avatar--selected]="
+						character === selectedCharacter
+					"
+					[src]="'../../assets/avatars/' + character.avatar"
+					(click)="selectCharacter(character)"
+				/>
+			</div>
+		</div>
+	</mat-expansion-panel>
+</mat-accordion>
+<mat-card>
+	<mat-card-content>
+		<button mat-raised-button color="primary" (click)="startRun()">Start Run</button>
+	</mat-card-content>
+</mat-card>
+<router-outlet></router-outlet>

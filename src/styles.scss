@@ -1,1 +1,34 @@
 /* You can add global styles to this file, and also import other style files */
+
+html,
+body {
+	height: 100%;
+}
+body {
+	margin: 0;
+	font-family: Roboto, "Helvetica Neue", sans-serif;
+	background-color: #3d5e80;
+}
+
+mat-card {
+	width: 100%;
+}
+
+mat-accordion {
+	width: 100%;
+}
+
+.character-avatar {
+	height: 100px;
+	width: 100px;
+}
+
+.character-avatar--small {
+	height: 50px;
+	width: 50px;
+}
+
+.character-avatar--large {
+	height: 200px;
+	width: 200px;
+}

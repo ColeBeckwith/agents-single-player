@@ -1,0 +1,33 @@
+:host {
+	display: flex;
+	flex-direction: column;
+	color: white;
+	align-items: center;
+	pointer-events: all;
+}
+
+.alert-level-numerical-display {
+	font-size: 24px;
+}
+
+.alert-level-slider-container {
+	margin-top: 8px;
+}
+
+.alert-level-slider {
+	background-image: linear-gradient(red, white);
+	width: 8px;
+	border-radius: 4px;
+	height: 210px;
+}
+
+.alert-level-slider-indicator {
+	height: 13px;
+	width: 13px;
+	border: 1px solid black;
+	border-radius: 7px;
+	background-color: white;
+	position: relative;
+	right: 3.5px;
+	top: -10px;
+}

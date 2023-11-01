@@ -225,5 +225,6 @@ export class CharacterService extends RocXService {
 		};
 
 		this.set('playerCharacter', playerCharacter);
+		return playerCharacter;
 	}
 }

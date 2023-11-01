@@ -47,10 +47,10 @@ export class MapService extends RocXService {
 		let forks: { xCoordinate: number; yCoordinate: number }[] = [];
 
 		const goToNextFork = () => {
-			const furthestFork = forks[forks.length - 1];
+			const middleFork = forks[Math.floor(forks.length / 2)];
 			currentSquare =
-				map[furthestFork.yCoordinate][furthestFork.xCoordinate];
-			forks.pop();
+				map[middleFork.yCoordinate][middleFork.xCoordinate];
+			forks = forks.filter(fork => fork !== middleFork);
 		};
 
 		while (builtSquares < height * width * density) {
@@ -86,8 +86,8 @@ export class MapService extends RocXService {
 						break;
 					}
 				} else {
-					// Give a ~25% chance to split the path.
-					const forking = Math.random() > 0.95;
+					// Give a chance to split the path.
+					const forking = Math.random() > 0.82;
 					if (forking) {
 						forks.push({
 							xCoordinate: currentSquare.xCoordinate,
@@ -148,7 +148,7 @@ export class MapService extends RocXService {
 		if (builtSquares < height * width * density) {
 			// The algorithm failed to build a dense enough map.
 			console.warn('Unable to construct valid map. Final map result:');
-			console.log(map);
+			console.warn(map);
 			// Try again.
 			this.generateMap(height, width, density);
 		} else {
@@ -196,6 +196,8 @@ export class MapService extends RocXService {
 		return neighboringCells.filter((cell) => cell.built);
 	}
 
+
+	// Helper function for getting the distance between two points. 
 	private getTravelDistanceFromPointToPoint(map: Map, pointA: Cell, pointB: Cell) {
 		let destinationReached = false;
 		let distance = 0;

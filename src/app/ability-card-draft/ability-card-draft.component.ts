@@ -42,8 +42,8 @@ export class AbilityCardDraftComponent extends SubscriberComponent {
 		}
 	}
 
-	purchaseCard() {
-		
+	purchaseCard(abilityCard: AbilityCard) {
+		this.abilityCardDraftService.purchaseCard(abilityCard);
 	}
 
 	finishDraft() {

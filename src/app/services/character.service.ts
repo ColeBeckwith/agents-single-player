@@ -1,7 +1,9 @@
 import { Injectable } from '@angular/core';
 
+import { AbilityCard, AbilityCardType } from '../card-data/ability-cards';
 import { BaseCharacter, baseCharacters } from '../card-data/base-characters';
 import { RocXService } from '../roc-x/roc-x.service';
+import { arrayShuffle } from '../utils/array-shuffle';
 
 export interface PlayerCharacter {
 	id: string;
@@ -25,7 +27,7 @@ export interface PlayerCharacter {
 			stealth: number;
 			combat: number;
 			tech: number;
-		}
+		};
 	};
 }
 
@@ -34,7 +36,12 @@ export interface PlayerCharacter {
 })
 export class CharacterService extends RocXService {
 	constructor() {
-		super({ playerCharacter: null, baseCharacters: baseCharacters });
+		super({
+			playerCharacter: null,
+			baseCharacters: baseCharacters,
+			abilityCardDraw: [],
+			abilityCardDiscard: [],
+		});
 	}
 
 	public initializePlayerCharacterFromBaseCharacter(
@@ -59,11 +66,19 @@ export class CharacterService extends RocXService {
 					tech: baseCharacter.startingStats.tech,
 				},
 				skillPoints: {
-					magic: baseCharacter.startingStats.magic * initialSkillPointsModifier,
-					stealth: baseCharacter.startingStats.stealth * initialSkillPointsModifier,
-					combat: baseCharacter.startingStats.combat * initialSkillPointsModifier,
-					tech: baseCharacter.startingStats.tech * initialSkillPointsModifier,
-				}
+					magic:
+						baseCharacter.startingStats.magic *
+						initialSkillPointsModifier,
+					stealth:
+						baseCharacter.startingStats.stealth *
+						initialSkillPointsModifier,
+					combat:
+						baseCharacter.startingStats.combat *
+						initialSkillPointsModifier,
+					tech:
+						baseCharacter.startingStats.tech *
+						initialSkillPointsModifier,
+				},
 			},
 		};
 
@@ -75,5 +90,66 @@ export class CharacterService extends RocXService {
 		const playerCharacter: PlayerCharacter = this.grab('playerCharacter');
 		playerCharacter.stats.credits += value;
 		this.set('playerCharacter', playerCharacter);
+	}
+
+	public adjustSkillPoints(type: AbilityCardType, value: number) {
+		const playerCharacter: PlayerCharacter = this.grab('playerCharacter');
+		playerCharacter.stats.skillPoints[type] += value;
+		this.set('playerCharacter', playerCharacter);
+	}
+
+	public addAbilityCardToDeck(abilityCard: AbilityCard) {
+		const abilityCardDraw: AbilityCard[] = this.grab('abilityCardDraw');
+		abilityCardDraw.push(abilityCard);
+		this.set('abilityCardDraw', abilityCardDraw);
+	}
+
+	public discardAbilityCard(abilityCardToDiscard: AbilityCard) {
+		const abilityCardDraw: AbilityCard[] = this.grab('abilityCardDraw');
+		const abilityCardDiscard: AbilityCard[] =
+			this.grab('abilityCardDiscard');
+		const indexOfCardToDiscard = abilityCardDraw.findIndex(
+			(abilityCardInDraw) =>
+				abilityCardInDraw.mint === abilityCardToDiscard.mint
+		);
+		if (indexOfCardToDiscard !== -1) {
+			abilityCardDraw.splice(indexOfCardToDiscard, 1);
+			abilityCardDiscard.push(abilityCardToDiscard);
+			this.set('abilityCardDraw', abilityCardDraw);
+			this.set('abilityCardDiscard', abilityCardDiscard);
+		}
+	}
+
+	public drawAbilityCardFromDiscard(abilityCardToDraw: AbilityCard) {
+		const abilityCardDraw: AbilityCard[] = this.grab('abilityCardDraw');
+		const abilityCardDiscard: AbilityCard[] =
+			this.grab('abilityCardDiscard');
+		const indexOfCardToDraw = abilityCardDiscard.findIndex(
+			(abilityCardInDiscard) =>
+				abilityCardInDiscard.mint === abilityCardToDraw.mint
+		);
+		if (indexOfCardToDraw !== -1) {
+			abilityCardDiscard.splice(indexOfCardToDraw, 1);
+			abilityCardDraw.push(abilityCardToDraw);
+			this.set('abilityCardDraw', abilityCardDraw);
+			this.set('abilityCardDiscard', abilityCardDiscard);
+		}
+	}
+
+	public removeAbilityCardFromDeck(abilityCardToRemove: AbilityCard) {
+		const abilityCardDraw: AbilityCard[] = this.grab('abilityCardDraw');
+
+		const indexOfCard = abilityCardDraw.findIndex(
+			(abilityCardInDraw) =>
+				abilityCardInDraw.mint === abilityCardToRemove.mint
+		);
+		abilityCardDraw.splice(indexOfCard, 1);
+		this.set('abilityCardDraw', abilityCardDraw);
+	}
+
+	public shuffleAbilityCardDraw() {
+		const abilityCardDraw: AbilityCard[] = this.grab('abilityCardDraw');
+		arrayShuffle(abilityCardDraw);
+		this.set('abilityCardDraw', abilityCardDraw);
 	}
 }

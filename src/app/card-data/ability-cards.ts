@@ -12,6 +12,8 @@ export interface AbilityCard {
 	consumable?: boolean;
 	consumeText?: string;
 	destroys?: boolean;
+	// tracks which created card this was. Serves as a unique ID for each Ability Card rather than the ID which is only unique per type of card.
+	mint?: number;
 }
 
 export const stealthCards: AbilityCard[] = [

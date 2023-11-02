@@ -6,7 +6,7 @@
 
 .ability-card {
 	height: 210px;
-	width: 160px;
+	width: 150px;
 	border: 2px solid black;
 	border-radius: 4px;
 	background-color: white;
@@ -68,11 +68,19 @@
 	color: white;
 }
 
+.ability-card-type-display {
+	position: absolute;
+	left: 2px;
+	top: 2px;
+	display: flex;
+	flex-direction: column;
+}
+
 .ability-card-image {
-	height: 70px;
-	width: 100%;
-	border: 1px solid black;
+	height: 90px;
+	width: 112px;
 	margin-bottom: 4px;
+	border-radius: 4px;
 }
 
 .ability-card-text {

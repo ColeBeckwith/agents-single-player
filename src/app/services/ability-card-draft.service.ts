@@ -15,7 +15,11 @@ export class AbilityCardDraftService extends RocXService {
 		});
 	}
 
-	initializeDraft(playerCharacter: PlayerCharacter) {
+	public initializeDraft(playerCharacter: PlayerCharacter) {
+		this.refreshDraftableCards(playerCharacter);
+	}
+
+	public refreshDraftableCards(playerCharacter: PlayerCharacter) {
 		const playerSkills = playerCharacter.stats.skills;
 		// Get total stat points of the player.
 		const totalStatPoints =
@@ -68,5 +72,15 @@ export class AbilityCardDraftService extends RocXService {
 
 		// save the draftable cards to the state.
 		this.set('draftableCards', draftableCards);
+	}
+
+	public checkAbilityCardAffordable(
+		abilityCard: AbilityCard,
+		playerCharacter: PlayerCharacter
+	): boolean {
+		return (
+			playerCharacter.stats.skillPoints[abilityCard.primaryType] >=
+			abilityCard.cost
+		);
 	}
 }

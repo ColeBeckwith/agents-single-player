@@ -77,5 +77,17 @@ export const levelOneEncounterCards: EncounterCard[] = [
 	{
 		id: 'outdated-security-bot',
 		title: 'Outdated Security Bot',
+		level: 1,
+		difficulty: 4,
+		strongTypes: ['combat', 'tech'],
+		weakTypes: []
 	},
+	{
+		id: 'mage-apprentice',
+		title: 'Mage Apprentice',
+		level: 1,
+		difficulty: 4,
+		strongTypes: ['magic'],
+		weakTypes: []
+	}
 ];

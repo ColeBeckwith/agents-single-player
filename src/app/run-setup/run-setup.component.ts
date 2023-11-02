@@ -1,8 +1,9 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 
+import { BaseCharacter } from '../card-data/base-characters';
 import { AbilityCardDraftService } from '../services/ability-card-draft.service';
-import { BaseCharacter, CharacterService } from '../services/character.service';
+import { CharacterService } from '../services/character.service';
 import { MapService } from '../services/map.service';
 
 @Component({
@@ -25,14 +26,15 @@ export class RunSetupComponent {
 	}
 
 	startRun() {
-		const playerCharacter = this.characterService.initializePlayerCharacterFromBaseCharacter(
-			this.selectedCharacter
-				? this.selectedCharacter
-				: this.characters[
-						Math.floor(Math.random() * this.characters.length)
-				  ]
-		);
-		this.mapService.generateMap(12, 12, .3);
+		const playerCharacter =
+			this.characterService.initializePlayerCharacterFromBaseCharacter(
+				this.selectedCharacter
+					? this.selectedCharacter
+					: this.characters[
+							Math.floor(Math.random() * this.characters.length)
+					  ]
+			);
+		this.mapService.generateMap(12, 12, 0.3);
 		this.abilityCardDraftService.initializeDraft(playerCharacter);
 		this.router.navigate(['/run']);
 	}

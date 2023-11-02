@@ -27,6 +27,10 @@ import { ScenarioSelectComponent } from './scenario-select/scenario-select.compo
 import { AbilityCardDraftComponent } from './ability-card-draft/ability-card-draft.component';
 import { AbilityCardComponent } from './ability-card/ability-card.component';
 import { SkillTypeToDisplayPipe } from './skill-type-to-display/skill-type-to-display.pipe';
+import { HudCreditsComponent } from './hud-credits/hud-credits.component';
+import { SubscriberComponent } from './subscriber/subscriber.component';
+import { AbilityTypeIconComponent } from './ability-type-icon/ability-type-icon.component';
+import { AbilityCardAffordablePipe } from './ability-card-affordable/ability-card-affordable.pipe';
 
 @NgModule({
 	declarations: [
@@ -48,6 +52,10 @@ import { SkillTypeToDisplayPipe } from './skill-type-to-display/skill-type-to-di
   AbilityCardDraftComponent,
   AbilityCardComponent,
   SkillTypeToDisplayPipe,
+  HudCreditsComponent,
+  SubscriberComponent,
+  AbilityTypeIconComponent,
+  AbilityCardAffordablePipe,
 	],
 	imports: [
 		BrowserModule,

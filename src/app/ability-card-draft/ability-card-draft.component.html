@@ -1,8 +1,35 @@
-<div
-	*ngFor="let abilityCard of draftableCards$ | async"
-	class="ability-card-container"
->
-	<app-ability-card [abilityCard]="abilityCard"></app-ability-card>
-	<button mat-raised-button>Add To Deck</button>
-	<span class="ability-card-cost-display">{{ abilityCard.cost }} {{ abilityCard.primaryType | skillTypeToDisplay }} Point(s)</span>
+<div class="draftable-card-container">
+	<div
+		*ngFor="let abilityCard of draftableCards$ | async"
+		class="ability-card-container"
+	>
+		<app-ability-card [abilityCard]="abilityCard"></app-ability-card>
+		<button
+			mat-raised-button
+			[disabled]="
+				!(
+					playerCharacter$
+					| async
+					| abilityCardAffordable : abilityCard
+				)
+			"
+		>
+			Add To Deck
+		</button>
+		<span class="ability-card-cost-display"
+			>{{ abilityCard.cost }}
+			{{ abilityCard.primaryType | skillTypeToDisplay }} Point(s)</span
+		>
+	</div>
+</div>
+<div class="ability-card-draft-actions-container">
+	<button
+		mat-raised-button
+		[disabled]="playerCredits && playerCredits < 1"
+		(click)="refreshAbilityCards()"
+		class="ability-card-draft-actions-container__button"
+	>
+		Refresh: <i class="fa-solid fa-cent-sign"></i>1
+	</button>
+	<button mat-raised-button class="ability-card-draft-actions-container__button" (click)="finishDraft()">Finish</button>
 </div>

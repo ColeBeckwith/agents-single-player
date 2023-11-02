@@ -8,9 +8,10 @@ export interface AbilityCard {
 	encounterValue: number;
 	encounterText?: string;
 	primaryType: AbilityCardType;
-	secondaryType?: AbilityCardType;
+	secondaryTypes?: AbilityCardType[];
 	consumable?: boolean;
 	consumeText?: string;
+	destroys?: boolean;
 }
 
 export const stealthCards: AbilityCard[] = [
@@ -26,7 +27,7 @@ export const stealthCards: AbilityCard[] = [
 		id: 'hidden-blade',
 		title: 'Hidden Blade',
 		primaryType: 'stealth',
-		secondaryType: 'combat',
+		secondaryTypes: ['combat'],
 		rarity: 1,
 		cost: 2,
 		encounterValue: 2,
@@ -58,6 +59,15 @@ export const stealthCards: AbilityCard[] = [
 		encounterValue: 2,
 		consumable: true,
 		consumeText: 'Reveal all squares within 4 spaces.'
+	},
+	{
+		id: 'assassinate',
+		title: 'Assassinate',
+		primaryType: 'stealth',
+		rarity: 3,
+		cost: 4,
+		encounterValue: 15,
+		destroys: true
 	}
 ];
 
@@ -160,6 +170,16 @@ export const magicCards: AbilityCard[] = [
 		cost: 3,
 		encounterValue: 15,
 		encounterText: 'Health -2'
+	},
+	{
+		id: 'tree-of-life',
+		title: 'Tree of Life',
+		primaryType: 'magic',
+		rarity: 3,
+		cost: 5,
+		encounterValue: 0,
+		consumable: true,
+		consumeText: 'Health +5'
 	}
 ];
 

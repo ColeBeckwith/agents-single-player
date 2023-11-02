@@ -12,9 +12,23 @@
 			abilityCard.primaryType === 'magic'
 		"
 	>
-		<div class="ability-card-encounter-value-display">{{ abilityCard.encounterValue }}</div>
+		<div class="ability-card-encounter-value-display">
+			{{ abilityCard.encounterValue }}
+		</div>
+		<div class="ability-card-type-display">
+			<app-ability-type-icon
+				[abilityType]="abilityCard.primaryType"
+			></app-ability-type-icon>
+			<app-ability-type-icon
+				*ngFor="let abilityType of abilityCard.secondaryTypes"
+				[abilityType]="abilityType"
+			></app-ability-type-icon>
+		</div>
 		<b>{{ abilityCard.title }}</b>
-		<div class="ability-card-image"></div>
+		<img
+			class="ability-card-image"
+			[src]="'../../assets/ability-cards/' + abilityCard.id + '.jpeg'"
+		/>
 
 		<span class="ability-card-text" *ngIf="abilityCard.encounterText"
 			><b>Encounter:</b> {{ abilityCard.encounterText }}</span

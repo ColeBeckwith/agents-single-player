@@ -12,6 +12,8 @@
 
 .alert-level-slider-container {
 	margin-top: 8px;
+	position: relative;
+	left: 4px;
 }
 
 .alert-level-slider {
@@ -19,6 +21,11 @@
 	width: 8px;
 	border-radius: 4px;
 	height: 210px;
+}
+
+.alert-counter-icon {
+	height: 25px;
+	margin: 8px 0;
 }
 
 .alert-level-slider-indicator {

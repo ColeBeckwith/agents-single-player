@@ -16,7 +16,6 @@ export class AbilityCardDraftService extends RocXService {
 	}
 
 	initializeDraft(playerCharacter: PlayerCharacter) {
-		console.log('initializing draft from ' + playerCharacter);
 		const playerSkills = playerCharacter.stats.skills;
 		// Get total stat points of the player.
 		const totalStatPoints =

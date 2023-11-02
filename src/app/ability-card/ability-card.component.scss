@@ -1,0 +1,81 @@
+@import "../../variables";
+
+:host {
+	color: black;
+}
+
+.ability-card {
+	height: 210px;
+	width: 160px;
+	border: 2px solid black;
+	border-radius: 4px;
+	background-color: white;
+}
+
+.ability-card-overlay {
+	height: 100%;
+	width: calc(100% - 16px);
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	padding: 0 8px;
+	position: relative;
+}
+
+.ability-card-overlay--stealth {
+	background-color: $agt-stealth-muted;
+
+	.ability-card-encounter-value-display {
+		background-color: $agt-stealth;
+	}
+}
+
+.ability-card-overlay--combat {
+	background-color: $agt-combat-muted;
+
+	.ability-card-encounter-value-display {
+		background-color: $agt-combat;
+	}
+}
+
+.ability-card-overlay--tech {
+	background-color: $agt-tech-muted;
+
+	.ability-card-encounter-value-display {
+		background-color: $agt-tech;
+	}
+}
+
+.ability-card-overlay--magic {
+	background-color: $agt-magic-muted;
+
+	.ability-card-encounter-value-display {
+		background-color: $agt-magic;
+	}
+}
+
+.ability-card-encounter-value-display {
+	position: absolute;
+	right: 2px;
+	top: 2px;
+	height: 24px;
+	width: 24px;
+	border-radius: 50%;
+	border: 1px solid black;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	color: white;
+}
+
+.ability-card-image {
+	height: 70px;
+	width: 100%;
+	border: 1px solid black;
+	margin-bottom: 4px;
+}
+
+.ability-card-text {
+	font-size: 10px;
+	line-height: 1;
+}

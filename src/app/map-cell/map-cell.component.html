@@ -1,2 +1,11 @@
 <i *ngIf="cell.start" class="fa-solid fa-door-open"></i>
-{{ cell.distanceToStart }}
+<i *ngIf="cell.exit" class="fa-solid fa-person-through-window"></i>
+<i *ngIf="cell.loot" class="fa-solid fa-sack-dollar"></i>
+<i *ngIf="cell.boon" class="fa-solid fa-circle-up"></i>
+<i
+	*ngIf="cell.encounter"
+	class="fa-solid fa-question"
+	[class.encounter-icon--level-one]="cell.encounterDifficulty === 1"
+	[class.encounter-icon--level-two]="cell.encounterDifficulty === 2"
+	[class.encounter-icon--level-three]="cell.encounterDifficulty === 3"
+></i>

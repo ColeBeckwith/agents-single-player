@@ -1,1 +1,8 @@
-<p>ability-card-draft works!</p>
+<div
+	*ngFor="let abilityCard of draftableCards$ | async"
+	class="ability-card-container"
+>
+	<app-ability-card [abilityCard]="abilityCard"></app-ability-card>
+	<button mat-raised-button>Add To Deck</button>
+	<span class="ability-card-cost-display">{{ abilityCard.cost }} {{ abilityCard.primaryType | skillTypeToDisplay }} Point(s)</span>
+</div>

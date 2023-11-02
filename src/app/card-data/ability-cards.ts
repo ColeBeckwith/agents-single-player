@@ -198,13 +198,13 @@ export const techCards: AbilityCard[] = [
 		rarity: 2,
 		cost: 2,
 		encounterValue: -2,
-		encounterText: 'If succesful, Adapative Intrusion permanently gets +1 Encounter Value.'
+		encounterText: 'If successful, Adapative Intrusion permanently gets +1 Encounter Value.'
 	},
 	{
 		id: 'x-ray-vision',
 		title: 'X-Ray Vision',
 		primaryType: 'tech',
-		rarity: 2,
+		rarity: 3,
 		cost: 3,
 		encounterValue: 0,
 		consumable: true,

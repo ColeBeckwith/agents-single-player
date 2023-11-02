@@ -6,12 +6,25 @@
 	justify-content: center;
 	align-items: center;
 	color: white;
+	opacity: 0;
 
 	&.map-cell--built {
 		height: 28px;
 		width: 28px;
 		border: 1px solid white;
 		cursor: pointer;
+		opacity: 1;
 	}
 }
 
+.encounter-icon--level-one {
+	color: #66ff00;
+}
+
+.encounter-icon--level-two {
+	color: yellow;
+}
+
+.encounter-icon--level-three {
+	color: #ff2d2d;
+}

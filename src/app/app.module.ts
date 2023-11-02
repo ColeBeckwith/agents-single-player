@@ -25,6 +25,8 @@ import { RunSetupComponent } from './run-setup/run-setup.component';
 import { RunComponent } from './run/run.component';
 import { ScenarioSelectComponent } from './scenario-select/scenario-select.component';
 import { AbilityCardDraftComponent } from './ability-card-draft/ability-card-draft.component';
+import { AbilityCardComponent } from './ability-card/ability-card.component';
+import { SkillTypeToDisplayPipe } from './skill-type-to-display/skill-type-to-display.pipe';
 
 @NgModule({
 	declarations: [
@@ -44,6 +46,8 @@ import { AbilityCardDraftComponent } from './ability-card-draft/ability-card-dra
 		MapCellComponent,
 		HudAlertCounterComponent,
   AbilityCardDraftComponent,
+  AbilityCardComponent,
+  SkillTypeToDisplayPipe,
 	],
 	imports: [
 		BrowserModule,

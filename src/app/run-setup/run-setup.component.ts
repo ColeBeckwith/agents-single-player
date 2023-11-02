@@ -32,7 +32,7 @@ export class RunSetupComponent {
 						Math.floor(Math.random() * this.characters.length)
 				  ]
 		);
-		this.mapService.generateMap(16, 16, .3);
+		this.mapService.generateMap(12, 12, .3);
 		this.abilityCardDraftService.initializeDraft(playerCharacter);
 		this.router.navigate(['/run']);
 	}

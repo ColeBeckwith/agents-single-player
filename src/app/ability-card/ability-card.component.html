@@ -1,0 +1,26 @@
+<div class="ability-card">
+	<div
+		class="ability-card-overlay"
+		[class.ability-card-overlay--stealth]="
+			abilityCard.primaryType === 'stealth'
+		"
+		[class.ability-card-overlay--combat]="
+			abilityCard.primaryType === 'combat'
+		"
+		[class.ability-card-overlay--tech]="abilityCard.primaryType === 'tech'"
+		[class.ability-card-overlay--magic]="
+			abilityCard.primaryType === 'magic'
+		"
+	>
+		<div class="ability-card-encounter-value-display">{{ abilityCard.encounterValue }}</div>
+		<b>{{ abilityCard.title }}</b>
+		<div class="ability-card-image"></div>
+
+		<span class="ability-card-text" *ngIf="abilityCard.encounterText"
+			><b>Encounter:</b> {{ abilityCard.encounterText }}</span
+		>
+		<span class="ability-card-text" *ngIf="abilityCard.consumeText"
+			><b>Consume:</b> {{ abilityCard.consumeText }}</span
+		>
+	</div>
+</div>

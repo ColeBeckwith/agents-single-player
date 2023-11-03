@@ -1,4 +1,4 @@
-export type AbilityCardType = 'stealth' | 'magic' | 'tech' | 'combat'
+export type AbilityCardType = 'stealth' | 'magic' | 'tech' | 'combat';
 
 export interface AbilityCard {
 	id: string;
@@ -23,7 +23,7 @@ export const stealthCards: AbilityCard[] = [
 		primaryType: 'stealth',
 		rarity: 1,
 		cost: 1,
-		encounterValue: 2
+		encounterValue: 2,
 	},
 	{
 		id: 'hidden-blade',
@@ -50,7 +50,7 @@ export const stealthCards: AbilityCard[] = [
 		rarity: 2,
 		cost: 1,
 		encounterValue: 4,
-		encounterText: 'Loses 1 Encounter Value for each equipment carried'
+		encounterText: 'Loses 1 Encounter Value for each equipment carried',
 	},
 	{
 		id: 'recon',
@@ -60,7 +60,7 @@ export const stealthCards: AbilityCard[] = [
 		cost: 2,
 		encounterValue: 2,
 		consumable: true,
-		consumeText: 'Reveal all squares within 4 spaces.'
+		consumeText: 'Reveal all squares within 4 spaces.',
 	},
 	{
 		id: 'assassinate',
@@ -69,8 +69,8 @@ export const stealthCards: AbilityCard[] = [
 		rarity: 3,
 		cost: 4,
 		encounterValue: 15,
-		destroys: true
-	}
+		destroys: true,
+	},
 ];
 
 export const combatCards: AbilityCard[] = [
@@ -80,7 +80,26 @@ export const combatCards: AbilityCard[] = [
 		primaryType: 'combat',
 		rarity: 1,
 		cost: 1,
-		encounterValue: 2
+		encounterValue: 2,
+	},
+	{
+		id: 'observe-tactics',
+		title: 'Observe Tactics',
+		primaryType: 'combat',
+		rarity: 1,
+		cost: 1,
+		encounterValue: -1,
+		encounterText: '+2 Combat Skill Points'
+	},
+	{
+		id: 'charge',
+		title: 'Charge',
+		primaryType: 'combat',
+		rarity: 1,
+		cost: 2,
+		encounterValue: 1,
+		consumable: true,
+		consumeText: 'Movement +2',
 	},
 	{
 		id: 'improvised-weapon',
@@ -89,7 +108,7 @@ export const combatCards: AbilityCard[] = [
 		rarity: 1,
 		cost: 2,
 		encounterValue: 3,
-		encounterText: 'Encounter Value is reduced by 2 each time it is used'
+		encounterText: 'Encounter Value is reduced by 2 each time it is used.',
 	},
 	{
 		id: 'mag-dump',
@@ -98,7 +117,26 @@ export const combatCards: AbilityCard[] = [
 		rarity: 1,
 		cost: 1,
 		encounterValue: 4,
-		encounterText: 'Cannot be played with any other Combat Type (Primary) cards'
+		encounterText: 'Cannot be played with any other Combat Type cards.',
+	},
+	{
+		id: 'surpression',
+		title: 'Supression',
+		primaryType: 'combat',
+		rarity: 1,
+		cost: 2,
+		encounterValue: 1,
+		encounterText:
+			'If total encounter value is within 4 of required value, ignore any negative health effects from the encounter card.',
+	},
+	{
+		id: 'improvised-explosive',
+		title: 'Improvised Explosive',
+		primaryType: 'combat',
+		rarity: 2,
+		cost: 2,
+		encounterValue: 5,
+		encounterText: 'You must discard 1 ability card in order to play this.',
 	},
 	{
 		id: 'grenade',
@@ -107,7 +145,7 @@ export const combatCards: AbilityCard[] = [
 		rarity: 2,
 		cost: 2,
 		encounterValue: 6,
-		encounterText: 'Alert Level +1'
+		encounterText: 'Alert Level +1.',
 	},
 	{
 		id: 'berserk',
@@ -116,7 +154,7 @@ export const combatCards: AbilityCard[] = [
 		rarity: 3,
 		cost: 1,
 		encounterValue: 5,
-		encounterText: 'Health -1'
+		encounterText: 'Health -1.',
 	},
 	{
 		id: 'tend-wounds',
@@ -125,8 +163,17 @@ export const combatCards: AbilityCard[] = [
 		rarity: 3,
 		cost: 2,
 		encounterValue: -2,
-		encounterText: 'Health +3'
-	}
+		encounterText: 'Health +3.',
+	},
+	{
+		id: 'departing-gift',
+		title: 'Departing Gift',
+		primaryType: 'combat',
+		rarity: 3,
+		cost: 3,
+		encounterValue: 10,
+		encounterText: 'You must destroy 1 ability card in order to play this.',
+	},
 ];
 
 export const magicCards: AbilityCard[] = [
@@ -136,7 +183,46 @@ export const magicCards: AbilityCard[] = [
 		primaryType: 'magic',
 		rarity: 1,
 		cost: 1,
-		encounterValue: 1
+		encounterValue: 1,
+	},
+	{
+		id: 'slow',
+		title: 'Slow',
+		primaryType: 'magic',
+		rarity: 1,
+		cost: 1,
+		encounterValue: -1,
+		encounterText: 'If encounter is successful, return 1 other played card back to your deck.'
+	},
+	{
+		id: 'sapling-of-life',
+		title: 'Sapling of Life',
+		primaryType: 'magic',
+		rarity: 1,
+		cost: 2,
+		encounterValue: 0,
+		consumable: true,
+		consumeText: 'Health +1'
+	},
+	{
+		id: 'transmute',
+		title: 'Transmute',
+		primaryType: 'magic',
+		rarity: 1,
+		cost: 1,
+		encounterValue: 0,
+		consumable: true,
+		consumeText: 'Change the current encounter to a different encounter of the same difficulty.'
+	},
+	{
+		id: 'branch-of-life',
+		title: 'Branch of Life',
+		primaryType: 'magic',
+		rarity: 2,
+		cost: 3,
+		encounterValue: 0,
+		consumable: true,
+		consumeText: 'Health +4'
 	},
 	{
 		id: 'flame',
@@ -144,7 +230,36 @@ export const magicCards: AbilityCard[] = [
 		primaryType: 'magic',
 		rarity: 2,
 		cost: 2,
-		encounterValue: 5
+		encounterValue: 5,
+	},
+	{
+		id: 'reverse-metamorphosis',
+		title: 'Reverse Metamorphosis',
+		primaryType: 'magic',
+		rarity: 2,
+		cost: 2,
+		encounterValue: 1,
+		consumable: true,
+		consumeText: 'Change the current encounter a different encounter of a lower difficulty.'
+	},
+	{
+		id: 'stop',
+		title: 'Stop',
+		primaryType: 'magic',
+		rarity: 2,
+		cost: 3,
+		encounterValue: -2,
+		encounterText: 'If encounter is successful, return 2 other played cards back to your deck.'
+	},
+	{
+		id: 'summoning-ritual',
+		title: 'Summoning Ritual',
+		primaryType: 'magic',
+		rarity: 3,
+		cost: 1,
+		encounterValue: 0,
+		consumable: true,
+		consumeText: 'Change the current encounter to an encounter for which Magic is a Strong Type.'
 	},
 	{
 		id: 'teleport',
@@ -154,7 +269,7 @@ export const magicCards: AbilityCard[] = [
 		cost: 3,
 		encounterValue: 1,
 		consumable: true,
-		consumeText: 'Move to any discovered square'
+		consumeText: 'Move to any discovered square',
 	},
 	{
 		id: 'blaze',
@@ -162,7 +277,7 @@ export const magicCards: AbilityCard[] = [
 		primaryType: 'magic',
 		rarity: 3,
 		cost: 3,
-		encounterValue: 10
+		encounterValue: 10,
 	},
 	{
 		id: 'rewind',
@@ -171,7 +286,8 @@ export const magicCards: AbilityCard[] = [
 		rarity: 3,
 		cost: 3,
 		encounterValue: -6,
-		encounterText: 'After resolving the encounter, return all other cards played on this encounter into your inventory. Only one Rewind may be played per encounter.'
+		encounterText:
+			'After resolving the encounter, return all other cards played on this encounter into your inventory. Only one Rewind may be played per encounter.',
 	},
 	{
 		id: 'inferno',
@@ -180,7 +296,7 @@ export const magicCards: AbilityCard[] = [
 		rarity: 3,
 		cost: 3,
 		encounterValue: 15,
-		encounterText: 'Health -2'
+		encounterText: 'Health -2',
 	},
 	{
 		id: 'tree-of-life',
@@ -190,8 +306,8 @@ export const magicCards: AbilityCard[] = [
 		cost: 5,
 		encounterValue: 0,
 		consumable: true,
-		consumeText: 'Health +5'
-	}
+		consumeText: 'Health +7',
+	},
 ];
 
 export const techCards: AbilityCard[] = [
@@ -201,7 +317,7 @@ export const techCards: AbilityCard[] = [
 		primaryType: 'tech',
 		rarity: 1,
 		cost: 1,
-		encounterValue: 1
+		encounterValue: 1,
 	},
 	{
 		id: 'sonar',
@@ -211,7 +327,7 @@ export const techCards: AbilityCard[] = [
 		cost: 2,
 		encounterValue: 1,
 		consumable: true,
-		consumeText: 'Reveal all squares within 3 spaces'
+		consumeText: 'Reveal all squares within 3 spaces',
 	},
 	{
 		id: 'trojan-horse',
@@ -220,7 +336,8 @@ export const techCards: AbilityCard[] = [
 		rarity: 2,
 		cost: 2,
 		encounterValue: 3,
-		encounterText: 'If you fail this encounter, reveal all squares within 5'
+		encounterText:
+			'If you fail this encounter, reveal all squares within 5',
 	},
 	{
 		id: 'adaptive-intrusion',
@@ -229,7 +346,8 @@ export const techCards: AbilityCard[] = [
 		rarity: 2,
 		cost: 2,
 		encounterValue: -2,
-		encounterText: 'If successful, Adapative Intrusion permanently gets +1 Encounter Value.'
+		encounterText:
+			'If successful, Adapative Intrusion permanently gets +1 Encounter Value.',
 	},
 	{
 		id: 'x-ray-vision',
@@ -239,7 +357,6 @@ export const techCards: AbilityCard[] = [
 		cost: 3,
 		encounterValue: 0,
 		consumable: true,
-		consumeText: 'Reveal all squares in a straight line'
-	}
-
-]
+		consumeText: 'Reveal all squares in a straight line',
+	},
+];

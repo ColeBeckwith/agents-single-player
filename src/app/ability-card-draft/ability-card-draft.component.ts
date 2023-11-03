@@ -5,6 +5,7 @@ import { Observable, takeUntil } from 'rxjs';
 import { AbilityCard } from '../card-data/ability-cards';
 import { AbilityCardDraftService } from '../services/ability-card-draft.service';
 import { CharacterService, PlayerCharacter } from '../services/character.service';
+import { PhaseService } from '../services/phase.service';
 import { SubscriberComponent } from '../subscriber/subscriber.component';
 
 @Component({
@@ -19,7 +20,8 @@ export class AbilityCardDraftComponent extends SubscriberComponent {
 
 	constructor(
 		private abilityCardDraftService: AbilityCardDraftService,
-		private characterService: CharacterService
+		private characterService: CharacterService,
+		private phaseService: PhaseService
 	) {
 		super();
 	}
@@ -47,6 +49,6 @@ export class AbilityCardDraftComponent extends SubscriberComponent {
 	}
 
 	finishDraft() {
-
+		this.phaseService.finishAbilityCardDraft();
 	}
 }

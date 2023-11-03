@@ -5,6 +5,7 @@
 	top: 0;
 	left: 0;
 	pointer-events: none;
+	z-index: 2;
 }
 
 app-hud-health {
@@ -37,4 +38,12 @@ app-hud-alert-counter {
 	position: absolute;
 	right: 12px;
 	top: 130px;
+}
+
+app-hud-ability-card-deck {
+	pointer-events: all;
+	position: absolute; 
+	bottom: 0;
+	left: 0;
+	z-index: 1;
 }

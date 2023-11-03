@@ -2,9 +2,9 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { BaseCharacter } from '../card-data/base-characters';
-import { AbilityCardDraftService } from '../services/ability-card-draft.service';
 import { CharacterService } from '../services/character.service';
 import { MapService } from '../services/map.service';
+import { PhaseService } from '../services/phase.service';
 
 @Component({
 	selector: 'app-run-setup',
@@ -26,16 +26,15 @@ export class RunSetupComponent {
 	}
 
 	startRun() {
-		const playerCharacter =
-			this.characterService.initializePlayerCharacterFromBaseCharacter(
-				this.selectedCharacter
-					? this.selectedCharacter
-					: this.characters[
-							Math.floor(Math.random() * this.characters.length)
-					  ]
-			);
+		this.characterService.initializePlayerCharacterFromBaseCharacter(
+			this.selectedCharacter
+				? this.selectedCharacter
+				: this.characters[
+						Math.floor(Math.random() * this.characters.length)
+				  ]
+		);
 		this.mapService.generateMap(12, 12, 0.3);
-		this.abilityCardDraftService.initializeDraft(playerCharacter);
+		this.phaseService.startNewGame();
 		this.router.navigate(['/run']);
 	}
 
@@ -43,7 +42,7 @@ export class RunSetupComponent {
 		private characterService: CharacterService,
 		private router: Router,
 		private mapService: MapService,
-		private abilityCardDraftService: AbilityCardDraftService
+		private phaseService: PhaseService
 	) {
 		this.characters = this.characterService.grab('baseCharacters');
 	}

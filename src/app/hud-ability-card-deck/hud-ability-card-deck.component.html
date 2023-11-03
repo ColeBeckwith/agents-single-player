@@ -1,0 +1,10 @@
+<mat-accordion>
+	<mat-expansion-panel hideToggle>
+		<mat-expansion-panel-header>
+			<mat-panel-title>Ability Cards ({{ ( abilityCardDraw$ | async )?.length }})</mat-panel-title>
+		</mat-expansion-panel-header>
+		<div class="ability-card-deck-container">
+			<app-ability-card *ngFor="let abilityCard of ( abilityCardDraw$ | async)" [abilityCard]="abilityCard" class="hud-ability-card-deck-card"></app-ability-card>
+		</div>
+	</mat-expansion-panel>
+</mat-accordion>

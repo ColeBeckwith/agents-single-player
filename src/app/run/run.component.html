@@ -1,3 +1,5 @@
 <app-hud></app-hud>
-<!-- <app-map></app-map> -->
-<app-ability-card-draft></app-ability-card-draft>
+<app-map *ngIf="!(abilityCardDrafting$ | async)"></app-map>
+<app-ability-card-draft
+	*ngIf="abilityCardDrafting$ | async"
+></app-ability-card-draft>

@@ -82,6 +82,8 @@ export class CharacterService extends RocXService {
 			},
 		};
 
+		this.set('abilityCardDraw', []);
+		this.set('abilityCardDiscard', []);
 		this.set('playerCharacter', playerCharacter);
 		return playerCharacter;
 	}
@@ -138,7 +140,6 @@ export class CharacterService extends RocXService {
 
 	public removeAbilityCardFromDeck(abilityCardToRemove: AbilityCard) {
 		const abilityCardDraw: AbilityCard[] = this.grab('abilityCardDraw');
-
 		const indexOfCard = abilityCardDraw.findIndex(
 			(abilityCardInDraw) =>
 				abilityCardInDraw.mint === abilityCardToRemove.mint

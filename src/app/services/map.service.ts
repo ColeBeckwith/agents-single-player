@@ -264,7 +264,10 @@ export class MapService extends RocXService {
 
 			if (chanceForAssignment < chanceSchedule[0]) {
 				unassignedCell.encounter = true;
-				const chanceForEncounterDifficulty = Math.random();
+				// Use half of the boards dimensions so that we end up easier encounters at the beginning of the map and more difficult ones at the end.
+				const chanceForEncounterDifficulty =
+					Math.random() *
+					(unassignedCell.distanceToStart / ((height + width) / 3));
 				unassignedCell.encounterDifficulty =
 					encounterDifficultySchedule.filter(
 						(tier) => tier < chanceForEncounterDifficulty
@@ -272,7 +275,9 @@ export class MapService extends RocXService {
 			} else if (chanceForAssignment < chanceSchedule[1]) {
 				unassignedCell.loot = true;
 				const chanceForLootRarity = Math.random();
-				unassignedCell.lootRarity = lootRaritySchedule.filter(tier => tier < chanceForLootRarity).length;
+				unassignedCell.lootRarity = lootRaritySchedule.filter(
+					(tier) => tier < chanceForLootRarity
+				).length;
 			} else if (chanceForAssignment < chanceSchedule[2]) {
 				unassignedCell.boon = true;
 			}

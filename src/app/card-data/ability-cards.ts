@@ -83,6 +83,15 @@ export const combatCards: AbilityCard[] = [
 		encounterValue: 2
 	},
 	{
+		id: 'improvised-weapon',
+		title: 'Improvised Weapon',
+		primaryType: 'combat',
+		rarity: 1,
+		cost: 2,
+		encounterValue: 3,
+		encounterText: 'Encounter Value is reduced by 2 each time it is used'
+	},
+	{
 		id: 'mag-dump',
 		title: 'Mag Dump',
 		primaryType: 'combat',

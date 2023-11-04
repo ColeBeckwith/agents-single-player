@@ -3,7 +3,7 @@ import { Component } from '@angular/core';
 import { Observable } from 'rxjs';
 
 import { AbilityCard } from '../card-data/ability-cards';
-import { CharacterService } from '../services/character.service';
+import { AbilityCardService } from '../services/ability-card.service';
 
 @Component({
   selector: 'app-hud-ability-card-deck',
@@ -14,12 +14,12 @@ export class HudAbilityCardDeckComponent {
 	public abilityCardDraw$: Observable<AbilityCard[]>;
 	public abilityCardDisard$: Observable<AbilityCard[]>;
 	
-	constructor(private characterService: CharacterService) {
+	constructor(private abilityCardService: AbilityCardService) {
 	}
 
 	ngOnInit() {
-		this.abilityCardDraw$ = this.characterService.listen('abilityCardDraw');
-		this.abilityCardDisard$ = this.characterService.listen('abilityCardDiscard');
+		this.abilityCardDraw$ = this.abilityCardService.listen('abilityCardDraw');
+		this.abilityCardDisard$ = this.abilityCardService.listen('abilityCardDiscard');
 	}
 
 }

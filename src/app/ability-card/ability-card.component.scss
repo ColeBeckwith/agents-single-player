@@ -12,6 +12,10 @@
 	background-color: white;
 }
 
+.ability-card-title {
+	font-size: 10px;
+}
+
 .ability-card-overlay {
 	height: 100%;
 	width: calc(100% - 16px);
@@ -57,7 +61,7 @@
 .ability-card-encounter-value-display {
 	position: absolute;
 	right: 2px;
-	top: 2px;
+	top: 16px;
 	height: 24px;
 	width: 24px;
 	border-radius: 50%;

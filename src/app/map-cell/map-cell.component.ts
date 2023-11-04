@@ -1,5 +1,6 @@
 import { Component, HostBinding, Input } from '@angular/core';
 
+import { CharacterService, PlayerCharacter } from '../services/character.service';
 import { Cell } from '../services/map.service';
 
 @Component({
@@ -12,7 +13,12 @@ export class MapCellComponent {
 
 	@HostBinding('class.map-cell--built') builtCell: boolean = false;
 
+	public characterAvatar: string;
+
+	constructor(private characterService: CharacterService) {}
+
 	ngOnInit() {
 		this.builtCell = this.cell.built;
+		this.characterAvatar = (<PlayerCharacter>this.characterService.grab('playerCharacter')).avatar;
 	}
 }

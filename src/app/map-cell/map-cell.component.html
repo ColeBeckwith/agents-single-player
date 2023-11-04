@@ -9,3 +9,4 @@
 	[class.encounter-icon--level-two]="cell.encounterDifficulty === 2"
 	[class.encounter-icon--level-three]="cell.encounterDifficulty === 3"
 ></i>
+<img *ngIf="cell.playerOccupies" [src]="'../../assets/avatars/' + characterAvatar" class="cell-avatar">

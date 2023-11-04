@@ -26,13 +26,11 @@ export class RunSetupComponent {
 	}
 
 	startRun() {
-		this.characterService.initializePlayerCharacterFromBaseCharacter(
-			this.selectedCharacter
-				? this.selectedCharacter
-				: this.characters[
-						Math.floor(Math.random() * this.characters.length)
-				  ]
-		);
+		this.selectedCharacter
+			? this.characterService.initializePlayerCharacterFromBaseCharacter(
+					this.selectedCharacter
+			  )
+			: this.characterService.initializeRandomCharacter();
 		this.mapService.generateMap(12, 12, 0.3);
 		this.phaseService.startNewGame();
 		this.router.navigate(['/run']);

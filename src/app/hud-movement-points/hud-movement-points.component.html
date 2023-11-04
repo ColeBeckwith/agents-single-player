@@ -1,0 +1,10 @@
+<ng-container *ngIf="movementPhase$ | async">
+	<span>Movement Points: {{ movementPoints$ | async }}</span>
+	<button
+		mat-raised-button
+		[color]="(movementPoints$ | async) === 0 ? 'warn' : ''"
+		(click)="finishMovement()"
+	>
+		Finish Movement
+	</button>
+</ng-container>

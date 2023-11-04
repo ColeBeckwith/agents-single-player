@@ -22,26 +22,34 @@
 		<mat-expansion-panel-header>
 			<mat-panel-title> Selected Character </mat-panel-title>
 			<mat-panel-description>
-				{{ selectedCharacter ? selectedCharacter.displayName : "Random" }}
+				{{
+					selectedCharacter ? selectedCharacter.displayName : "Random"
+				}}
 			</mat-panel-description>
 		</mat-expansion-panel-header>
 		<div class="character-avatar-container">
 			<div *ngFor="let character of characters">
 				<img
 					class="character-avatar"
+					*ngIf="!character.locked"
 					[class.character-avatar--selected]="
 						character === selectedCharacter
 					"
 					[src]="'../../assets/avatars/' + character.avatar"
 					(click)="selectCharacter(character)"
 				/>
+				<div *ngIf="character.locked" class="locked-avatar">
+					<i class="fa-solid fa-lock"></i>
+				</div>
 			</div>
 		</div>
 	</mat-expansion-panel>
 </mat-accordion>
 <mat-card>
 	<mat-card-content>
-		<button mat-raised-button color="primary" (click)="startRun()">Start Run</button>
+		<button mat-raised-button color="primary" (click)="startRun()">
+			Start Run
+		</button>
 	</mat-card-content>
 </mat-card>
 <router-outlet></router-outlet>

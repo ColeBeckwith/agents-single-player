@@ -25,6 +25,17 @@
 	cursor: pointer;
 }
 
+.locked-avatar {
+	margin: 0 4px;
+	border: 2px solid black;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	height: 100px;
+	width: 100px;
+	font-size: 48px;
+}
+
 .character-avatar--selected {
 	border-color: yellow;
 }

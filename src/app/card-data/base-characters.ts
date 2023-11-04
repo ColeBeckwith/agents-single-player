@@ -1,3 +1,5 @@
+import { AbilityCard } from './ability-cards';
+
 export interface BaseCharacter {
 	id: string;
 	avatar: string;
@@ -11,9 +13,65 @@ export interface BaseCharacter {
 		combat: number;
 		tech: number;
 	};
+	locked: boolean;
+	startingDeck: AbilityCard[]
 }
 
 export const baseCharacters: BaseCharacter[] = [
+	{
+		id: 'jakobs',
+		displayName: 'Ron Jakobs',
+		displayNameShort: 'Jakobs',
+		avatar: 'ron-jakobs-avatar.jpeg',
+		startingStats: {
+			health: 9,
+			credits: 6,
+			magic: 0,
+			stealth: 0,
+			combat: 5,
+			tech: 0,
+		},
+		locked: false,
+		startingDeck: [
+			{
+				id: 'run-n-gun',
+				title: 'Run\'n\'Gun',
+				primaryType: 'combat',
+				cost: 0,
+				rarity: 1,
+				encounterValue: 1,
+				consumable: true,
+				consumeText: '+1 Movement Point'
+			},
+			{
+				id: 'an-unquiet-man',
+				title: 'An Unquiet Man',
+				primaryType: 'combat',
+				cost: 0,
+				rarity: 1,
+				encounterValue: 2,
+				encounterText: '+1 Alert Level'
+			},
+			{
+				id: 'an-unquiet-man',
+				title: 'An Unquiet Man',
+				primaryType: 'combat',
+				cost: 0,
+				rarity: 1,
+				encounterValue: 2,
+				encounterText: '+1 Alert Level'
+			},
+			{
+				id: 'enough-to-be-dangerous',
+				title: 'Enough To Be Dangerous',
+				primaryType: 'combat',
+				secondaryTypes: ['magic'],
+				cost: 0,
+				rarity: 1,
+				encounterValue: 2,
+			}
+		]
+	},
 	{
 		id: 'cane',
 		displayName: 'Cane Burro',
@@ -27,6 +85,8 @@ export const baseCharacters: BaseCharacter[] = [
 			combat: 1,
 			tech: 1,
 		},
+		locked: true,
+		startingDeck: []
 	},
 	{
 		id: 'clyde',
@@ -41,6 +101,8 @@ export const baseCharacters: BaseCharacter[] = [
 			combat: 1,
 			tech: 5,
 		},
+		locked: true,
+		startingDeck: []
 	},
 	{
 		id: 'decker',
@@ -55,6 +117,8 @@ export const baseCharacters: BaseCharacter[] = [
 			combat: 2,
 			tech: 2,
 		},
+		locked: true,
+		startingDeck: []
 	},
 	{
 		id: 'ghost',
@@ -69,6 +133,8 @@ export const baseCharacters: BaseCharacter[] = [
 			combat: 1,
 			tech: 1,
 		},
+		locked: true,
+		startingDeck: []
 	},
 	{
 		id: 'houdini',
@@ -83,6 +149,8 @@ export const baseCharacters: BaseCharacter[] = [
 			combat: 1,
 			tech: 3,
 		},
+		locked: true,
+		startingDeck: []
 	},
 	{
 		id: 'orion',
@@ -97,20 +165,8 @@ export const baseCharacters: BaseCharacter[] = [
 			combat: 2,
 			tech: 2,
 		},
-	},
-	{
-		id: 'jakobs',
-		displayName: 'Ron Jakobs',
-		displayNameShort: 'Jakobs',
-		avatar: 'ron-jakobs-avatar.jpeg',
-		startingStats: {
-			health: 9,
-			credits: 6,
-			magic: 1,
-			stealth: 1,
-			combat: 5,
-			tech: 1,
-		},
+		locked: true,
+		startingDeck: []
 	},
 	{
 		id: 'slade',
@@ -125,6 +181,8 @@ export const baseCharacters: BaseCharacter[] = [
 			combat: 0,
 			tech: 2,
 		},
+		locked: true,
+		startingDeck: []
 	},
 	{
 		id: 'guardian',
@@ -139,6 +197,8 @@ export const baseCharacters: BaseCharacter[] = [
 			combat: 4,
 			tech: 0,
 		},
+		locked: true,
+		startingDeck: []
 	},
 	{
 		id: 'tinker',
@@ -153,6 +213,8 @@ export const baseCharacters: BaseCharacter[] = [
 			combat: 3,
 			tech: 3,
 		},
+		locked: true,
+		startingDeck: []
 	},
 	{
 		id: 'yuri',
@@ -167,5 +229,7 @@ export const baseCharacters: BaseCharacter[] = [
 			combat: 3,
 			tech: 1,
 		},
+		locked: true,
+		startingDeck: []
 	},
 ];

@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { APP_INITIALIZER, NgModule } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatExpansionModule } from '@angular/material/expansion';
@@ -22,6 +22,8 @@ import { HudAvatarComponent } from './hud-avatar/hud-avatar.component';
 import { HudCreditsComponent } from './hud-credits/hud-credits.component';
 import { HudExperienceComponent } from './hud-experience/hud-experience.component';
 import { HudHealthComponent } from './hud-health/hud-health.component';
+import { HudMovementPointsComponent } from './hud-movement-points/hud-movement-points.component';
+import { HudPhaseComponent } from './hud-phase/hud-phase.component';
 import { HudSkillsComponent } from './hud-skills/hud-skills.component';
 import { HudComponent } from './hud/hud.component';
 import { MainMenuComponent } from './main-menu/main-menu.component';
@@ -31,6 +33,8 @@ import { MapComponent } from './map/map.component';
 import { RunSetupComponent } from './run-setup/run-setup.component';
 import { RunComponent } from './run/run.component';
 import { ScenarioSelectComponent } from './scenario-select/scenario-select.component';
+import { AbilityCardService } from './services/ability-card.service';
+import { AlertLevelService } from './services/alert-level.service';
 import { SkillTypeToDisplayPipe } from './skill-type-to-display/skill-type-to-display.pipe';
 import { SubscriberComponent } from './subscriber/subscriber.component';
 
@@ -59,6 +63,8 @@ import { SubscriberComponent } from './subscriber/subscriber.component';
 		AbilityTypeIconComponent,
 		AbilityCardAffordablePipe,
 		HudAbilityCardDeckComponent,
+		HudPhaseComponent,
+		HudMovementPointsComponent,
 	],
 	imports: [
 		BrowserModule,
@@ -72,7 +78,13 @@ import { SubscriberComponent } from './subscriber/subscriber.component';
 		MatSliderModule,
 		MatTabsModule,
 	],
-	providers: [],
+	providers: [
+		{
+			provide: APP_INITIALIZER,
+			deps: [AbilityCardService, AlertLevelService],
+			useFactory: () => null,
+		},
+	],
 	bootstrap: [AppComponent],
 })
 export class AppModule {}

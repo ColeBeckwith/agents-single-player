@@ -4,6 +4,7 @@
 	color: white;
 	align-items: center;
 	pointer-events: all;
+	width: 30px;
 }
 
 .alert-level-numerical-display {
@@ -23,6 +24,10 @@
 	height: 210px;
 }
 
+.alert-level-icon-wrapper--alert-level-phase-active {
+	color: red;
+}
+
 .alert-counter-icon {
 	height: 25px;
 	margin: 8px 0;
@@ -38,3 +43,4 @@
 	right: 3.5px;
 	top: -10px;
 }
+

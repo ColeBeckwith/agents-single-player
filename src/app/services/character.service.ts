@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 
-import { AbilityCard, AbilityCardType } from '../card-data/ability-cards';
+import { AbilityCardType } from '../card-data/ability-cards';
 import { BaseCharacter, baseCharacters } from '../card-data/base-characters';
 import { RocXService } from '../roc-x/roc-x.service';
-import { arrayShuffle } from '../utils/array-shuffle';
+import { EventBusService } from './event-bus.service';
 
 export interface PlayerCharacter {
 	id: string;
@@ -11,6 +11,7 @@ export interface PlayerCharacter {
 	displayName: string;
 	displayNameShort: string;
 	stats: {
+		defaultMovementPoints: number;
 		maxHealth: number;
 		currentHealth: number;
 		credits: number;
@@ -35,25 +36,34 @@ export interface PlayerCharacter {
 	providedIn: 'root',
 })
 export class CharacterService extends RocXService {
-	constructor() {
+	constructor(private eventBusService: EventBusService) {
 		super({
 			playerCharacter: null,
-			baseCharacters: baseCharacters,
-			abilityCardDraw: [],
-			abilityCardDiscard: [],
+			baseCharacters: baseCharacters
 		});
+	}
+
+	public initializeRandomCharacter() {
+		const baseCharacters: BaseCharacter[] = this.grab('baseCharacters');
+		const unlockedCharacters = baseCharacters.filter(character => character.locked === false);
+		const randomCharacter = unlockedCharacters[Math.floor(Math.random() * unlockedCharacters.length)]
+		this.initializePlayerCharacterFromBaseCharacter(randomCharacter);
 	}
 
 	public initializePlayerCharacterFromBaseCharacter(
 		baseCharacter: BaseCharacter
 	) {
-		const initialSkillPointsModifier = 3;
+		if (baseCharacter.locked) {
+			console.error('Locked Character Selected');
+		}
+		// const initialSkillPointsModifier = 3;
 		const playerCharacter: PlayerCharacter = {
 			id: baseCharacter.id,
 			avatar: baseCharacter.avatar,
 			displayName: baseCharacter.displayName,
 			displayNameShort: baseCharacter.displayNameShort,
 			stats: {
+				defaultMovementPoints: 2,
 				maxHealth: baseCharacter.startingStats.health,
 				currentHealth: baseCharacter.startingStats.health,
 				credits: baseCharacter.startingStats.credits,
@@ -65,27 +75,31 @@ export class CharacterService extends RocXService {
 					combat: baseCharacter.startingStats.combat,
 					tech: baseCharacter.startingStats.tech,
 				},
+				// skillPoints: {
+				// 	magic:
+				// 		baseCharacter.startingStats.magic *
+				// 		initialSkillPointsModifier,
+				// 	stealth:
+				// 		baseCharacter.startingStats.stealth *
+				// 		initialSkillPointsModifier,
+				// 	combat:
+				// 		baseCharacter.startingStats.combat *
+				// 		initialSkillPointsModifier,
+				// 	tech:
+				// 		baseCharacter.startingStats.tech *
+				// 		initialSkillPointsModifier,
+				// },
 				skillPoints: {
-					magic:
-						baseCharacter.startingStats.magic *
-						initialSkillPointsModifier,
-					stealth:
-						baseCharacter.startingStats.stealth *
-						initialSkillPointsModifier,
-					combat:
-						baseCharacter.startingStats.combat *
-						initialSkillPointsModifier,
-					tech:
-						baseCharacter.startingStats.tech *
-						initialSkillPointsModifier,
-				},
+					magic: 0,
+					stealth: 0,
+					combat: 0,
+					tech: 0
+				}
 			},
 		};
 
-		this.set('abilityCardDraw', []);
-		this.set('abilityCardDiscard', []);
 		this.set('playerCharacter', playerCharacter);
-		return playerCharacter;
+		this.eventBusService.playerCharacterInitialized$.next({});
 	}
 
 	public adjustCredits(value: number) {
@@ -100,57 +114,10 @@ export class CharacterService extends RocXService {
 		this.set('playerCharacter', playerCharacter);
 	}
 
-	public addAbilityCardToDeck(abilityCard: AbilityCard) {
-		const abilityCardDraw: AbilityCard[] = this.grab('abilityCardDraw');
-		abilityCardDraw.push(abilityCard);
-		this.set('abilityCardDraw', abilityCardDraw);
-	}
-
-	public discardAbilityCard(abilityCardToDiscard: AbilityCard) {
-		const abilityCardDraw: AbilityCard[] = this.grab('abilityCardDraw');
-		const abilityCardDiscard: AbilityCard[] =
-			this.grab('abilityCardDiscard');
-		const indexOfCardToDiscard = abilityCardDraw.findIndex(
-			(abilityCardInDraw) =>
-				abilityCardInDraw.mint === abilityCardToDiscard.mint
-		);
-		if (indexOfCardToDiscard !== -1) {
-			abilityCardDraw.splice(indexOfCardToDiscard, 1);
-			abilityCardDiscard.push(abilityCardToDiscard);
-			this.set('abilityCardDraw', abilityCardDraw);
-			this.set('abilityCardDiscard', abilityCardDiscard);
-		}
-	}
-
-	public drawAbilityCardFromDiscard(abilityCardToDraw: AbilityCard) {
-		const abilityCardDraw: AbilityCard[] = this.grab('abilityCardDraw');
-		const abilityCardDiscard: AbilityCard[] =
-			this.grab('abilityCardDiscard');
-		const indexOfCardToDraw = abilityCardDiscard.findIndex(
-			(abilityCardInDiscard) =>
-				abilityCardInDiscard.mint === abilityCardToDraw.mint
-		);
-		if (indexOfCardToDraw !== -1) {
-			abilityCardDiscard.splice(indexOfCardToDraw, 1);
-			abilityCardDraw.push(abilityCardToDraw);
-			this.set('abilityCardDraw', abilityCardDraw);
-			this.set('abilityCardDiscard', abilityCardDiscard);
-		}
-	}
-
-	public removeAbilityCardFromDeck(abilityCardToRemove: AbilityCard) {
-		const abilityCardDraw: AbilityCard[] = this.grab('abilityCardDraw');
-		const indexOfCard = abilityCardDraw.findIndex(
-			(abilityCardInDraw) =>
-				abilityCardInDraw.mint === abilityCardToRemove.mint
-		);
-		abilityCardDraw.splice(indexOfCard, 1);
-		this.set('abilityCardDraw', abilityCardDraw);
-	}
-
-	public shuffleAbilityCardDraw() {
-		const abilityCardDraw: AbilityCard[] = this.grab('abilityCardDraw');
-		arrayShuffle(abilityCardDraw);
-		this.set('abilityCardDraw', abilityCardDraw);
+	public reduceHealth(amountToReduceHealth: number) {
+		const playerCharacter: PlayerCharacter = this.grab('playerCharacter')
+		playerCharacter.stats.currentHealth -= amountToReduceHealth;
+		this.eventBusService.playerCharacterLostHealth$.next({});
+		this.set('playerCharacter', playerCharacter);
 	}
 }

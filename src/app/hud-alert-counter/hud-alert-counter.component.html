@@ -1,5 +1,12 @@
 <!-- <span>Alert Level</span> -->
-<i class="fa-solid fa-bell alert-counter-icon"></i>
+<div
+	class="alert-level-icon-wrapper"
+	[class.alert-level-icon-wrapper--alert-level-phase-active]="
+		alertLevelPhase$ | async
+	"
+>
+	<i class="fa-solid fa-bell alert-counter-icon"></i>
+</div>
 <span class="alert-level-numerical-display">{{ alertLevel$ | async }}</span>
 <div class="alert-level-slider-container">
 	<div class="alert-level-slider"></div>

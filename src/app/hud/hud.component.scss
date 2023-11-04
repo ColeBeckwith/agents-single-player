@@ -27,6 +27,18 @@ app-hud-avatar {
 	left: 8px;
 }
 
+app-hud-phase {
+	position: absolute;
+	top: 36px;
+	left: 120px
+}
+
+app-hud-movement-points {
+	position: absolute;
+	top: 56px;
+	left: 120px;
+}
+
 app-hud-credits {
 	position: absolute;
 	top: 8px;
@@ -47,3 +59,24 @@ app-hud-ability-card-deck {
 	left: 0;
 	z-index: 1;
 }
+
+@keyframes damageFlash {
+	0% {
+		opacity: .75;
+	}
+	100% {
+		opacity: 0;
+	}
+}
+
+.damage-taken-flash {
+	background-color: red;
+	width: 100vw;
+	height: 100vh;
+	position: fixed;
+	top: 0;
+	left: 0;
+	animation-name: damageFlash;
+	animation-duration: 0.6s;
+}
+

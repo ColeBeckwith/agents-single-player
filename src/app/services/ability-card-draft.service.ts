@@ -2,9 +2,13 @@ import { Injectable } from '@angular/core';
 
 import { filter } from 'rxjs';
 
-import { AbilityCard, combatCards, magicCards, stealthCards, techCards } from '../card-data/ability-cards';
+import { AbilityCard } from '../card-data/ability-cards';
+import { combatCards } from '../card-data/ability-cards/combat-cards';
+import { magicCards } from '../card-data/ability-cards/magic-cards';
+import { stealthCards } from '../card-data/ability-cards/stealth-cards';
+import { techCards } from '../card-data/ability-cards/tech-cards';
 import { RocXService } from '../roc-x/roc-x.service';
-import { deepClone } from '../utils/deep-clone';
+import { AbilityCardService } from './ability-card.service';
 import { CharacterService, PlayerCharacter } from './character.service';
 import { PhaseService } from './phase.service';
 
@@ -12,11 +16,11 @@ import { PhaseService } from './phase.service';
 	providedIn: 'root',
 })
 export class AbilityCardDraftService extends RocXService {
-	private mint = 1;
 
 	constructor(
 		private characterService: CharacterService,
-		private phaseService: PhaseService
+		private phaseService: PhaseService,
+		private abilityCardService: AbilityCardService
 	) {
 		super({
 			draftableCards: [],
@@ -70,7 +74,7 @@ export class AbilityCardDraftService extends RocXService {
 			purchasedCard &&
 			this.checkAbilityCardAffordable(purchasedCard, playerCharacter)
 		) {
-			this.characterService.addAbilityCardToDeck(purchasedCard);
+			this.abilityCardService.addAbilityCardToDeck(purchasedCard);
 			this.characterService.adjustSkillPoints(
 				purchasedCard.primaryType,
 				purchasedCard.cost * -1
@@ -92,7 +96,7 @@ export class AbilityCardDraftService extends RocXService {
 		);
 	}
 
-	private getDraftCard(playerCharacter: PlayerCharacter) {
+	public getDraftCard(playerCharacter: PlayerCharacter) {
 		const playerSkills = playerCharacter.stats.skills;
 		// Get total stat points of the player.
 		const totalStatPoints =
@@ -104,21 +108,33 @@ export class AbilityCardDraftService extends RocXService {
 		const chanceForType = Math.random() * totalStatPoints;
 		let cardPool: AbilityCard[];
 		// Select which ability type to pull from. They should get more cards from skills they have higher stats in.
+		let chanceForRarity: number;
 		if (chanceForType < playerSkills.combat) {
+			// Use the combat pool.
 			cardPool = combatCards;
+			// Give higher rarity cards the higher the player combat skill is.
+			chanceForRarity = Math.random() * (playerSkills.combat / 5);
 		} else if (chanceForType < playerSkills.combat + playerSkills.magic) {
+			// Use the magic pool
 			cardPool = magicCards;
+			// Give higher rarity cards the higher the player magic skill is.
+			chanceForRarity = Math.random() * (playerSkills.magic / 5);
 		} else if (
 			chanceForType <
 			playerSkills.combat + playerSkills.magic + playerSkills.tech
 		) {
+			// Use the tech pool
 			cardPool = techCards;
+			// Give higher rarity cards the higher the player tech skill is.
+			chanceForRarity = Math.random() * (playerSkills.tech / 5);
 		} else {
+			// Use the stealth pool
 			cardPool = stealthCards;
+			// Give higher rarity cards the higher the player stealth skill is.
+			chanceForRarity = Math.random() * (playerSkills.stealth / 5);
 		}
 		// decide on the rarity for the card.
 		const raritySchedule = [0, 0.8, 0.95];
-		const chanceForRarity = Math.random();
 		const cardRarity = raritySchedule.filter(
 			(rarities) => chanceForRarity > rarities
 		).length;
@@ -130,17 +146,8 @@ export class AbilityCardDraftService extends RocXService {
 
 		const draftableCard: AbilityCard =
 			possibleCards[Math.floor(Math.random() * possibleCards.length)];
-		const mintedCard = this.mintCard(draftableCard);
-		console.log(mintedCard);
+		const mintedCard = this.abilityCardService.mintCard(draftableCard);
 		return mintedCard;
 	}
 
-	private mintCard(abilityCard: AbilityCard) {
-		// Deep clone at this point since we are wanting the create a new version of this card.
-		const mintedCard = deepClone(abilityCard);
-		// Assign the mint value and increment it.
-		mintedCard.mint = this.mint;
-		this.mint++;
-		return mintedCard;
-	}
 }

@@ -117,7 +117,11 @@ export class CharacterService extends RocXService {
 	public reduceHealth(amountToReduceHealth: number) {
 		const playerCharacter: PlayerCharacter = this.grab('playerCharacter')
 		playerCharacter.stats.currentHealth -= amountToReduceHealth;
-		this.eventBusService.playerCharacterLostHealth$.next({});
-		this.set('playerCharacter', playerCharacter);
+		if (playerCharacter.stats.currentHealth > 0) {
+			this.eventBusService.playerCharacterLostHealth$.next({});
+			this.set('playerCharacter', playerCharacter);
+		} else {
+			this.eventBusService.playerDied$.next({})
+		}
 	}
 }

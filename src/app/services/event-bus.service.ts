@@ -11,4 +11,6 @@ export class EventBusService {
 	public playerCharacterInitialized$ = new Subject();
 
 	public playerCharacterLostHealth$ = new Subject();
+
+	public playerDied$ = new Subject();
 }

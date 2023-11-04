@@ -37,6 +37,7 @@ import { AbilityCardService } from './services/ability-card.service';
 import { AlertLevelService } from './services/alert-level.service';
 import { SkillTypeToDisplayPipe } from './skill-type-to-display/skill-type-to-display.pipe';
 import { SubscriberComponent } from './subscriber/subscriber.component';
+import { GameOverComponent } from './game-over/game-over.component';
 
 @NgModule({
 	declarations: [
@@ -65,6 +66,7 @@ import { SubscriberComponent } from './subscriber/subscriber.component';
 		HudAbilityCardDeckComponent,
 		HudPhaseComponent,
 		HudMovementPointsComponent,
+  GameOverComponent,
 	],
 	imports: [
 		BrowserModule,

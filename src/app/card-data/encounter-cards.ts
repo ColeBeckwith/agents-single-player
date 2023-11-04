@@ -9,6 +9,7 @@ export interface EncounterCard {
 	weakTypes: AbilityCardType[];
 	successText: string;
 	failureText: string;
+	mint?: number;
 }
 
 export const levelOneEncounterCards: EncounterCard[] = [

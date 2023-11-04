@@ -38,6 +38,7 @@ import { AlertLevelService } from './services/alert-level.service';
 import { SkillTypeToDisplayPipe } from './skill-type-to-display/skill-type-to-display.pipe';
 import { SubscriberComponent } from './subscriber/subscriber.component';
 import { GameOverComponent } from './game-over/game-over.component';
+import { EncounterTableComponent } from './encounter-table/encounter-table.component';
 
 @NgModule({
 	declarations: [
@@ -67,6 +68,7 @@ import { GameOverComponent } from './game-over/game-over.component';
 		HudPhaseComponent,
 		HudMovementPointsComponent,
   GameOverComponent,
+  EncounterTableComponent,
 	],
 	imports: [
 		BrowserModule,

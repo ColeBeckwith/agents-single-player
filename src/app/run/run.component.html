@@ -3,3 +3,4 @@
 <app-ability-card-draft
 	*ngIf="abilityCardDrafting$ | async"
 ></app-ability-card-draft>
+<app-encounter-table *ngIf="(encounterPhase$ | async)"></app-encounter-table>

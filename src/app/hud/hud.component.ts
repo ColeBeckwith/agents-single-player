@@ -14,7 +14,6 @@ export class HudComponent {
 
 	ngOnInit() {
 		this.eventBusService.playerCharacterLostHealth$.subscribe(() => {
-			console.log('lostHealth')
 			this.damageTaken = true;
 			setTimeout(() => {
 				this.damageTaken = false;

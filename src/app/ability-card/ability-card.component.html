@@ -1,40 +1,22 @@
 <div class="ability-card">
 	<div
 		class="ability-card-overlay"
-		[class.ability-card-overlay--stealth]="
-			abilityCard.primaryType === 'stealth'
-		"
-		[class.ability-card-overlay--combat]="
-			abilityCard.primaryType === 'combat'
-		"
+		[class.ability-card-overlay--stealth]="abilityCard.primaryType === 'stealth'"
+		[class.ability-card-overlay--combat]="abilityCard.primaryType === 'combat'"
 		[class.ability-card-overlay--tech]="abilityCard.primaryType === 'tech'"
-		[class.ability-card-overlay--magic]="
-			abilityCard.primaryType === 'magic'
-		"
+		[class.ability-card-overlay--magic]="abilityCard.primaryType === 'magic'"
 	>
 		<div class="ability-card-encounter-value-display">
 			{{ abilityCard.encounterValue }}
 		</div>
 		<div class="ability-card-type-display">
-			<app-ability-type-icon
-				[abilityType]="abilityCard.primaryType"
-			></app-ability-type-icon>
-			<app-ability-type-icon
-				*ngFor="let abilityType of abilityCard.secondaryTypes"
-				[abilityType]="abilityType"
-			></app-ability-type-icon>
+			<app-ability-type-icon [abilityType]="abilityCard.primaryType"></app-ability-type-icon>
+			<app-ability-type-icon *ngFor="let abilityType of abilityCard.secondaryTypes" [abilityType]="abilityType"></app-ability-type-icon>
 		</div>
 		<b class="ability-card-title">{{ abilityCard.title }}</b>
-		<img
-			class="ability-card-image"
-			[src]="'../../assets/ability-cards/' + abilityCard.id + '.jpeg'"
-		/>
+		<img class="ability-card-image" [src]="'../../assets/ability-cards/' + abilityCard.id + '.jpeg'" />
 
-		<span class="ability-card-text" *ngIf="abilityCard.encounterText"
-			><b>Encounter:</b> {{ abilityCard.encounterText }}</span
-		>
-		<span class="ability-card-text" *ngIf="abilityCard.consumeText"
-			><b>Consume:</b> {{ abilityCard.consumeText }}</span
-		>
+		<span class="ability-card-text" *ngIf="abilityCard.encounterText"><b>Encounter:</b> {{ abilityCard.encounterText }}</span>
+		<span class="ability-card-text" *ngIf="abilityCard.consumeText"><b>Consume:</b> {{ abilityCard.consumeText }}</span>
 	</div>
 </div>

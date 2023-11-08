@@ -1,0 +1,33 @@
+<div class="encounter-card">
+	<div class="encounter-card__level-display">
+		<i class="fa-solid fa-star" *ngFor="let i of  [].constructor(encounterCard.level)"></i>
+	</div>
+	{{ encounterCard.title }}
+
+	<img class="encounter-card__image" [src]="'../../assets/encounter-cards/' + encounterCard.id + '.jpeg'" />
+
+	<div class="encounter-card__difficulty-row">
+		<div class="encounter-card__strong-weak-display">
+			<span>1/2x</span>
+			<div class="encounter-card__strong-weak-icon-container">
+				<app-ability-type-icon *ngFor="let weakType of encounterCard.weakTypes" [abilityType]="weakType"></app-ability-type-icon>
+			</div>
+		</div>
+		<b class="encounter-card__difficulty">{{ encounterCard.difficulty }}</b>
+		<div class="encounter-card__strong-weak-display">
+			<span>2x</span>
+			<div class="encounter-card__strong-weak-icon-container">
+				<app-ability-type-icon *ngFor="let strongType of encounterCard.strongTypes" [abilityType]="strongType"></app-ability-type-icon>
+			</div>
+		</div>
+	</div>
+
+	<div class="encounter-card__details">
+		<span *ngIf="encounterCard.successText"><b>Success:</b> {{ encounterCard.successText }}</span>
+		<span *ngIf="encounterCard.failureText"><b>Failure:</b> {{ encounterCard.failureText }}</span>
+	</div>
+
+	<div class="encounter-card__tags" *ngIf="encounterCard.tags && encounterCard.tags.length > 0">
+		<i *ngFor="let tag of encounterCard.tags">{{ tag }}</i>
+	</div>
+</div>

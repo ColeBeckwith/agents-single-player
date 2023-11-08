@@ -39,14 +39,17 @@ export class CharacterService extends RocXService {
 	constructor(private eventBusService: EventBusService) {
 		super({
 			playerCharacter: null,
-			baseCharacters: baseCharacters
+			baseCharacters: baseCharacters,
 		});
 	}
 
 	public initializeRandomCharacter() {
 		const baseCharacters: BaseCharacter[] = this.grab('baseCharacters');
-		const unlockedCharacters = baseCharacters.filter(character => character.locked === false);
-		const randomCharacter = unlockedCharacters[Math.floor(Math.random() * unlockedCharacters.length)]
+		const unlockedCharacters = baseCharacters.filter(
+			(character) => character.locked === false
+		);
+		const randomCharacter =
+			unlockedCharacters[Math.floor(Math.random() * unlockedCharacters.length)];
 		this.initializePlayerCharacterFromBaseCharacter(randomCharacter);
 	}
 
@@ -93,8 +96,8 @@ export class CharacterService extends RocXService {
 					magic: 0,
 					stealth: 0,
 					combat: 0,
-					tech: 0
-				}
+					tech: 0,
+				},
 			},
 		};
 
@@ -111,17 +114,18 @@ export class CharacterService extends RocXService {
 	public adjustSkillPoints(type: AbilityCardType, value: number) {
 		const playerCharacter: PlayerCharacter = this.grab('playerCharacter');
 		playerCharacter.stats.skillPoints[type] += value;
+		playerCharacter.stats.skillPoints[type] = Math.max(playerCharacter.stats.skillPoints[type], 0);
 		this.set('playerCharacter', playerCharacter);
 	}
 
 	public reduceHealth(amountToReduceHealth: number) {
-		const playerCharacter: PlayerCharacter = this.grab('playerCharacter')
+		const playerCharacter: PlayerCharacter = this.grab('playerCharacter');
 		playerCharacter.stats.currentHealth -= amountToReduceHealth;
 		if (playerCharacter.stats.currentHealth > 0) {
 			this.eventBusService.playerCharacterLostHealth$.next({});
 			this.set('playerCharacter', playerCharacter);
 		} else {
-			this.eventBusService.playerDied$.next({})
+			this.eventBusService.playerDied$.next({});
 		}
 	}
 }

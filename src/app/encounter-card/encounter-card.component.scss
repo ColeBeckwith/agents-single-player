@@ -1,0 +1,73 @@
+.encounter-card {
+	border: 2px solid black;
+	border-radius: 4px;
+	background-color: white;
+	// height: 420px;
+	width: 280px;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	color: black;
+	padding: 4px 8px 16px 8px;
+	position: relative;
+}
+
+.encounter-card__level-display {
+	display: flex;
+	position: absolute;
+	top: 4px;
+	right: 4px;
+	flex-direction: column;
+}
+
+.encounter-card__image {
+	height: 165px;
+	width: 208px;
+	border: 1px solid black;
+	margin-bottom: 8px;
+}
+
+.encounter-card__difficulty {
+	font-size: 24px;
+	width: 40px;
+	display: flex;
+	justify-content: center;
+}
+
+.encounter-card__difficulty-row {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-around;
+	width: 100%;
+}
+
+.encounter-card__strong-weak-display {
+	width: 70px;
+	height: 45px;
+	display: flex;
+	justify-content: flex-start;
+	font-size: 12px;
+	flex-direction: column;
+	align-items: center;
+}
+
+.encounter-card__strong-weak-icon-container {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-around;
+	width: 100%;
+	font-size: 16px;
+}
+
+.encounter-card__details {
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
+	width: 100%;
+}
+
+.encounter-card__tags {
+	width: 100%;
+	font-size: 12px;
+	margin: 8px 0 -16px 0;
+}

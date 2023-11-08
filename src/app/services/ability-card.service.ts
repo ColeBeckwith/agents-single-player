@@ -17,10 +17,11 @@ export class AbilityCardService extends RocXService {
 	constructor(private eventBusService: EventBusService, private characterService: CharacterService) {
 		super({
 			abilityCardDraw: [],
-			abilityCardDiscard: []
-		})
+			abilityCardDiscard: [],
+			encounterStage: [],
+		});
 		this.eventBusService.playerCharacterInitialized$.subscribe(() => {
-			this.mintStartingDeck();		
+			this.mintStartingDeck();
 		});
 	}
 
@@ -41,12 +42,8 @@ export class AbilityCardService extends RocXService {
 
 	public discardAbilityCard(abilityCardToDiscard: AbilityCard) {
 		const abilityCardDraw: AbilityCard[] = this.grab('abilityCardDraw');
-		const abilityCardDiscard: AbilityCard[] =
-			this.grab('abilityCardDiscard');
-		const indexOfCardToDiscard = abilityCardDraw.findIndex(
-			(abilityCardInDraw) =>
-				abilityCardInDraw.mint === abilityCardToDiscard.mint
-		);
+		const abilityCardDiscard: AbilityCard[] = this.grab('abilityCardDiscard');
+		const indexOfCardToDiscard = abilityCardDraw.findIndex((abilityCardInDraw) => abilityCardInDraw.mint === abilityCardToDiscard.mint);
 		if (indexOfCardToDiscard !== -1) {
 			abilityCardDraw.splice(indexOfCardToDiscard, 1);
 			abilityCardDiscard.push(abilityCardToDiscard);
@@ -55,14 +52,46 @@ export class AbilityCardService extends RocXService {
 		}
 	}
 
+	public moveCardFromDrawToEncounterStage(abilityCardToMove: AbilityCard, indexToInsert?: number) {
+		const drawPile: AbilityCard[] = this.grab('abilityCardDraw');
+		const cardToMove = drawPile.find((abilityCardInDrawPile) => abilityCardInDrawPile.mint === abilityCardToMove.mint);
+		if (cardToMove) {
+			const indexInDrawPile = drawPile.indexOf(cardToMove);
+			drawPile.splice(indexInDrawPile, 1);
+			this.set('abilityCardDraw', drawPile);
+			const encounterStage = this.grab('encounterStage');
+			if (indexToInsert) {
+				encounterStage.splice(indexToInsert, 0, cardToMove);
+			} else {
+				// default behavior is to add to the end.
+				encounterStage.push(cardToMove);
+			}
+			this.set('encounterStage', encounterStage);
+		}
+	}
+
+	public moveCardFromEncounterStageToDraw(abilityCardToMove: AbilityCard, indexToInsert?: number) {
+		const encounterStage: AbilityCard[] = this.grab('encounterStage');
+		const cardToMove = encounterStage.find((abilityCardInEncounterStage) => abilityCardInEncounterStage.mint === abilityCardToMove.mint);
+		if (cardToMove) {
+			const indexInDrawPile = encounterStage.indexOf(cardToMove);
+			encounterStage.splice(indexInDrawPile, 1);
+			this.set('encounterStage', encounterStage);
+			const abilityCardDraw = this.grab('abilityCardDraw');
+			if (indexToInsert) {
+				abilityCardDraw.splice(indexToInsert, 0, cardToMove);
+			} else {
+				// Default behavior is to add to the end.
+				abilityCardDraw.push(cardToMove);
+			}
+			this.set('abilityCardDraw', abilityCardDraw);
+		}
+	}
+
 	public drawAbilityCardFromDiscard(abilityCardToDraw: AbilityCard) {
 		const abilityCardDraw: AbilityCard[] = this.grab('abilityCardDraw');
-		const abilityCardDiscard: AbilityCard[] =
-			this.grab('abilityCardDiscard');
-		const indexOfCardToDraw = abilityCardDiscard.findIndex(
-			(abilityCardInDiscard) =>
-				abilityCardInDiscard.mint === abilityCardToDraw.mint
-		);
+		const abilityCardDiscard: AbilityCard[] = this.grab('abilityCardDiscard');
+		const indexOfCardToDraw = abilityCardDiscard.findIndex((abilityCardInDiscard) => abilityCardInDiscard.mint === abilityCardToDraw.mint);
 		if (indexOfCardToDraw !== -1) {
 			abilityCardDiscard.splice(indexOfCardToDraw, 1);
 			abilityCardDraw.push(abilityCardToDraw);
@@ -73,10 +102,7 @@ export class AbilityCardService extends RocXService {
 
 	public removeAbilityCardFromDeck(abilityCardToRemove: AbilityCard) {
 		const abilityCardDraw: AbilityCard[] = this.grab('abilityCardDraw');
-		const indexOfCard = abilityCardDraw.findIndex(
-			(abilityCardInDraw) =>
-				abilityCardInDraw.mint === abilityCardToRemove.mint
-		);
+		const indexOfCard = abilityCardDraw.findIndex((abilityCardInDraw) => abilityCardInDraw.mint === abilityCardToRemove.mint);
 		abilityCardDraw.splice(indexOfCard, 1);
 		this.set('abilityCardDraw', abilityCardDraw);
 	}
@@ -90,10 +116,10 @@ export class AbilityCardService extends RocXService {
 	private mintStartingDeck() {
 		const playerCharacter = this.characterService.grab('playerCharacter');
 		const baseCharacters: BaseCharacter[] = this.characterService.grab('baseCharacters');
-		const matchingBaseCharacter = <BaseCharacter>baseCharacters.find(baseCharacter => baseCharacter.id === playerCharacter.id);
+		const matchingBaseCharacter = <BaseCharacter>baseCharacters.find((baseCharacter) => baseCharacter.id === playerCharacter.id);
 		const baseCharacterStartingDeck = matchingBaseCharacter.startingDeck;
-		const mintedDeck = baseCharacterStartingDeck.map(card => this.mintCard(card));
+		const mintedDeck = baseCharacterStartingDeck.map((card) => this.mintCard(card));
 		this.set('abilityCardDiscard', []);
-		this.set('abilityCardDraw', mintedDeck);	
+		this.set('abilityCardDraw', mintedDeck);
 	}
 }

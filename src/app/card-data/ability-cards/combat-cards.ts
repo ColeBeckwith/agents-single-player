@@ -16,7 +16,7 @@ export const combatCards: AbilityCard[] = [
 		rarity: 1,
 		cost: 1,
 		encounterValue: -1,
-		encounterText: '+2 Combat Skill Points'
+		encounterText: '+2 Combat Skill Points',
 	},
 	{
 		id: 'charge',
@@ -53,8 +53,25 @@ export const combatCards: AbilityCard[] = [
 		rarity: 1,
 		cost: 2,
 		encounterValue: 1,
-		encounterText:
-			'If total encounter value is within 4 of required value, ignore any negative health effects from the encounter card.',
+		encounterText: 'If total encounter value is within 4 of required value, ignore any negative health effects from the encounter card.',
+	},
+	{
+		id: 'momentum',
+		title: 'Momentum',
+		primaryType: 'combat',
+		rarity: 2,
+		cost: 2,
+		encounterValue: 0,
+		encounterText: '+1 Encounter Value for each other card played in this enounter. Creates a copy of itself '
+	},
+	{
+		id: 'flamethrower',
+		title: 'Flamethrower',
+		primaryType: 'combat',
+		rarity: 2,
+		cost: 2,
+		encounterValue: 2,
+		tags: ['Fire'],
 	},
 	{
 		id: 'improvised-explosive',

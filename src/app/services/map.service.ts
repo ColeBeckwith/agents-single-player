@@ -1,7 +1,9 @@
 import { Injectable } from '@angular/core';
 
+import { EncounterCard } from '../card-data/encounter-cards';
 import { RocXService } from '../roc-x/roc-x.service';
 import { CharacterService, PlayerCharacter } from './character.service';
+import { EncounterService } from './encounter.service';
 import { MapGenerationService } from './map-generation.service';
 import { MapUtilitiesService } from './map-utilities.service';
 import { PhaseService } from './phase.service';
@@ -26,7 +28,9 @@ export interface Cell {
 	// whether an encounter exists on this square
 	encounter: boolean;
 	// the level of the encounter if it exists. 0 if it does not.
-	encounterDifficulty: number;
+	encounterDifficulty: 1 | 2 | 3 | 4;
+	// The encounter card representing the encounter if there is one.
+	assignedEncounter: EncounterCard | null;
 	// whether an encounter has been cleared on this square
 	encounterCleared: boolean;
 	loot: boolean;
@@ -43,7 +47,8 @@ export class MapService extends RocXService {
 		private phaseService: PhaseService,
 		private characterService: CharacterService,
 		private mapGenerationService: MapGenerationService,
-		private mapUtilitiesService: MapUtilitiesService
+		private mapUtilitiesService: MapUtilitiesService,
+		private encounterService: EncounterService
 	) {
 		super({ currentMap: null, movementPoints: 0 });
 
@@ -104,6 +109,7 @@ export class MapService extends RocXService {
 		const playerOccupiedCell = this.getPlayerOccupiedCellInCurrentMap();
 		if (playerOccupiedCell?.encounter) {
 			this.phaseService.endMovementWithEncounter();
+			this.encounterService.setActiveEncounter(playerOccupiedCell.assignedEncounter);
 		} else {
 			this.phaseService.endMovementWithoutMapEvent();
 		}

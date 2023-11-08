@@ -8,6 +8,7 @@ export const magicCards: AbilityCard[] = [
 		rarity: 1,
 		cost: 1,
 		encounterValue: 1,
+		tags: ['Fire']
 	},
 	{
 		id: 'slow',
@@ -16,7 +17,8 @@ export const magicCards: AbilityCard[] = [
 		rarity: 1,
 		cost: 1,
 		encounterValue: -1,
-		encounterText: 'If encounter is successful, return 1 other played card back to your deck.'
+		encounterText: 'If encounter is successful, return 1 other played card back to your deck.',
+		tags: ['Time']
 	},
 	{
 		id: 'seed-of-life',
@@ -26,7 +28,8 @@ export const magicCards: AbilityCard[] = [
 		cost: 2,
 		encounterValue: 0,
 		consumable: true,
-		consumeText: 'Health +1'
+		consumeText: 'Health +1',
+		tags: ['Healing']
 	},
 	{
 		id: 'transmute',
@@ -36,7 +39,8 @@ export const magicCards: AbilityCard[] = [
 		cost: 1,
 		encounterValue: 0,
 		consumable: true,
-		consumeText: 'Change the current encounter to a different encounter of the same difficulty.'
+		consumeText: 'Change the current encounter to a different encounter of the same difficulty.',
+		tags: ['Transform']
 	},
 	{
 		id: 'branch-of-life',
@@ -46,7 +50,8 @@ export const magicCards: AbilityCard[] = [
 		cost: 3,
 		encounterValue: 0,
 		consumable: true,
-		consumeText: 'Health +4'
+		consumeText: 'Health +4',
+		tags: ['Healing']
 	},
 	{
 		id: 'flame',
@@ -55,6 +60,7 @@ export const magicCards: AbilityCard[] = [
 		rarity: 2,
 		cost: 2,
 		encounterValue: 5,
+		tags: ['Fire']
 	},
 	{
 		id: 'reverse-metamorphosis',
@@ -64,7 +70,8 @@ export const magicCards: AbilityCard[] = [
 		cost: 2,
 		encounterValue: 1,
 		consumable: true,
-		consumeText: 'Change the current encounter a different encounter of a lower difficulty.'
+		consumeText: 'Change the current encounter a different encounter of a lower difficulty.',
+		tags: ['Time']
 	},
 	{
 		id: 'stop',
@@ -73,7 +80,8 @@ export const magicCards: AbilityCard[] = [
 		rarity: 2,
 		cost: 3,
 		encounterValue: -2,
-		encounterText: 'If encounter is successful, return 2 other played cards back to your deck.'
+		encounterText: 'If encounter is successful, return 2 other played cards back to your deck.',
+		tags: ['Time']
 	},
 	{
 		id: 'summoning-ritual',
@@ -102,6 +110,7 @@ export const magicCards: AbilityCard[] = [
 		rarity: 3,
 		cost: 3,
 		encounterValue: 10,
+		tags: ['Fire']
 	},
 	{
 		id: 'rewind',
@@ -121,6 +130,7 @@ export const magicCards: AbilityCard[] = [
 		cost: 3,
 		encounterValue: 15,
 		encounterText: 'Health -2',
+		tags: ['Fire']
 	},
 	{
 		id: 'tree-of-life',
@@ -131,5 +141,6 @@ export const magicCards: AbilityCard[] = [
 		encounterValue: 0,
 		consumable: true,
 		consumeText: 'Health +7',
+		tags: ['Healing']
 	},
 ];

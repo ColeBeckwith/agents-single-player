@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 
+import { EncounterCardService } from './encounter-card.service';
 import { MapUtilitiesService } from './map-utilities.service';
 import { Cell, Map } from './map.service';
 
@@ -7,13 +8,9 @@ import { Cell, Map } from './map.service';
 	providedIn: 'root',
 })
 export class MapGenerationService {
-	constructor(private mapUtilitiesService: MapUtilitiesService) {}
+	constructor(private mapUtilitiesService: MapUtilitiesService, private encounterCardService: EncounterCardService) {}
 
-	public generateMap(
-		height: number,
-		width: number,
-		buildDensity: number = 0.3
-	): Map {
+	public generateMap(height: number, width: number, buildDensity: number = 0.3): Map {
 		let builtSquares = 0;
 		let map: Cell[][] = [];
 		// Create the board with a bunch of default cells without any characteristics.
@@ -29,7 +26,8 @@ export class MapGenerationService {
 					exit: false,
 					assigned: true,
 					encounter: false,
-					encounterDifficulty: 0,
+					encounterDifficulty: 1,
+					assignedEncounter: null,
 					encounterCleared: false,
 					loot: false,
 					lootRarity: 0,
@@ -71,21 +69,9 @@ export class MapGenerationService {
 				}
 			} else {
 				// check which directions are possible...
-				const downPossible =
-					currentSquare.yCoordinate !== height - 1 &&
-					map[currentSquare.yCoordinate + 1][
-						currentSquare.xCoordinate
-					].built !== true;
-				const upPossible =
-					currentSquare.yCoordinate !== 0 &&
-					map[currentSquare.yCoordinate - 1][
-						currentSquare.xCoordinate
-					].built !== true;
-				const rightPossible =
-					currentSquare.xCoordinate !== width - 1 &&
-					map[currentSquare.yCoordinate][
-						currentSquare.xCoordinate + 1
-					].built !== true;
+				const downPossible = currentSquare.yCoordinate !== height - 1 && map[currentSquare.yCoordinate + 1][currentSquare.xCoordinate].built !== true;
+				const upPossible = currentSquare.yCoordinate !== 0 && map[currentSquare.yCoordinate - 1][currentSquare.xCoordinate].built !== true;
+				const rightPossible = currentSquare.xCoordinate !== width - 1 && map[currentSquare.yCoordinate][currentSquare.xCoordinate + 1].built !== true;
 
 				if (!downPossible && !upPossible && !rightPossible) {
 					if (forks.length > 0) {
@@ -132,20 +118,11 @@ export class MapGenerationService {
 
 					// ...set that next square to the current square and mark it built...
 					if (goingUp) {
-						currentSquare =
-							map[currentSquare.yCoordinate - 1][
-								currentSquare.xCoordinate
-							];
+						currentSquare = map[currentSquare.yCoordinate - 1][currentSquare.xCoordinate];
 					} else if (goingDown) {
-						currentSquare =
-							map[currentSquare.yCoordinate + 1][
-								currentSquare.xCoordinate
-							];
+						currentSquare = map[currentSquare.yCoordinate + 1][currentSquare.xCoordinate];
 					} else if (goingRight) {
-						currentSquare =
-							map[currentSquare.yCoordinate][
-								currentSquare.xCoordinate + 1
-							];
+						currentSquare = map[currentSquare.yCoordinate][currentSquare.xCoordinate + 1];
 					}
 
 					currentSquare.built = true;
@@ -166,38 +143,20 @@ export class MapGenerationService {
 		}
 	}
 
-	public addFeaturesToMap(
-		map: Cell[][],
-		height: number,
-		width: number,
-		encounterDensity: number,
-		encounterDifficultyModifier: number,
-		lootDensity: number,
-		boonDensity: number
-	) {
+	public addFeaturesToMap(map: Cell[][], height: number, width: number, encounterDensity: number, encounterDifficultyModifier: number, lootDensity: number, boonDensity: number) {
 		if (encounterDensity + lootDensity + boonDensity > 1) {
-			console.error(
-				'Invalid Map Request: Encounter Density, Loot Density and Boon Density combined are greater than 100%.'
-			);
+			console.error('Invalid Map Request: Encounter Density, Loot Density and Boon Density combined are greater than 100%.');
 		}
 		const allBuiltCells = this.mapUtilitiesService.getAllBuiltCellsInMap(map);
 		const startingCell = <Cell>allBuiltCells.find((cell) => cell.start);
 
 		allBuiltCells.forEach((cell) => {
-			cell.distanceToStart = this.mapUtilitiesService.getTravelDistanceFromPointToPoint(
-				map,
-				startingCell,
-				cell
-			);
+			cell.distanceToStart = this.mapUtilitiesService.getTravelDistanceFromPointToPoint(map, startingCell, cell);
 		});
 
 		const desiredExitDistance = height + width;
 		// Sort all cells by their closeness to the desired exit distance.
-		allBuiltCells.sort(
-			(a, b) =>
-				Math.abs(a.distanceToStart - desiredExitDistance) -
-				Math.abs(b.distanceToStart - desiredExitDistance)
-		);
+		allBuiltCells.sort((a, b) => Math.abs(a.distanceToStart - desiredExitDistance) - Math.abs(b.distanceToStart - desiredExitDistance));
 		// pick the first one to be the exit.
 		const exit = allBuiltCells[0];
 		exit.exit = true;
@@ -206,18 +165,9 @@ export class MapGenerationService {
 		const unassignedCells = allBuiltCells.filter((cell) => !cell.assigned);
 
 		// Assign encounter, loot and boons to unassigned cells.
-		const chanceSchedule = [
-			encounterDensity,
-			encounterDensity + lootDensity,
-			encounterDensity + lootDensity + boonDensity,
-		];
+		const chanceSchedule = [encounterDensity, encounterDensity + lootDensity, encounterDensity + lootDensity + boonDensity];
 		const invertedModifier = 1 / encounterDifficultyModifier;
-		const encounterDifficultySchedule = [
-			0 * invertedModifier,
-			0.6 * invertedModifier,
-			0.95 * invertedModifier,
-			1.3 * invertedModifier,
-		];
+		const encounterDifficultySchedule = [0 * invertedModifier, 0.6 * invertedModifier, 0.95 * invertedModifier, 1.3 * invertedModifier];
 		const lootRaritySchedule = [0, 0.9];
 		unassignedCells.forEach((unassignedCell) => {
 			const chanceForAssignment = Math.random();
@@ -225,19 +175,13 @@ export class MapGenerationService {
 			if (chanceForAssignment < chanceSchedule[0]) {
 				unassignedCell.encounter = true;
 				// Use half of the boards dimensions so that we end up easier encounters at the beginning of the map and more difficult ones at the end.
-				const chanceForEncounterDifficulty =
-					Math.random() *
-					(unassignedCell.distanceToStart / ((height + width) / 3));
-				unassignedCell.encounterDifficulty =
-					encounterDifficultySchedule.filter(
-						(tier) => tier < chanceForEncounterDifficulty
-					).length;
+				const chanceForEncounterDifficulty = Math.random() * (unassignedCell.distanceToStart / ((height + width) / 3));
+				unassignedCell.encounterDifficulty = <1 | 2 | 3 | 4>encounterDifficultySchedule.filter((tier) => tier < chanceForEncounterDifficulty).length;
+				unassignedCell.assignedEncounter = this.encounterCardService.getRandomEncounterCard(unassignedCell.encounterDifficulty);
 			} else if (chanceForAssignment < chanceSchedule[1]) {
 				unassignedCell.loot = true;
 				const chanceForLootRarity = Math.random();
-				unassignedCell.lootRarity = lootRaritySchedule.filter(
-					(tier) => tier < chanceForLootRarity
-				).length;
+				unassignedCell.lootRarity = lootRaritySchedule.filter((tier) => tier < chanceForLootRarity).length;
 			} else if (chanceForAssignment < chanceSchedule[2]) {
 				unassignedCell.boon = true;
 			}

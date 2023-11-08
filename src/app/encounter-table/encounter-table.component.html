@@ -1,1 +1,16 @@
-<p>encounter-table works!</p>
+<div class="active-encounter-display">
+	<app-encounter-card [encounterCard]="(activeEncounter$ | async)!"></app-encounter-card>
+</div>
+<div class="ability-card-played-cards-display">
+	<h3>Played Cards</h3>
+	<div
+		class="encounter-stage-ability-cards-container"
+		cdkDropList
+		id="abilityCardPlayedOnEncounter"
+		cdkDropListConnectedTo="abilityCardDraw"
+		cdkDropListOrientation="horizontal"
+		(cdkDropListDropped)="handleAbilityCardDropped($event)"
+	>
+		<app-ability-card *ngFor="let abilityCard of encounterStage$ | async" [abilityCard]="abilityCard" class="hud-ability-card-deck-card" cdkDrag></app-ability-card>
+	</div>
+</div>

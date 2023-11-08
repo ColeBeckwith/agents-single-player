@@ -1,12 +1,23 @@
 :host {
 	width: 100%;
+
+	::ng-deep {
+		.mat-expansion-panel-body {
+			padding: 0;
+		}
+	}
+	
 }
 
 .ability-card-deck-container {
 	display: flex;
 	flex-direction: row;
+	overflow-x: scroll;
+	padding: 8px;
 }
 
 .hud-ability-card-deck-card {
 	margin: 0 4px;
 }
+
+

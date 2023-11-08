@@ -1,13 +1,19 @@
 <mat-accordion>
 	<mat-expansion-panel hideToggle>
 		<mat-expansion-panel-header>
-			<mat-panel-title>Ability Cards ({{ ( abilityCardDraw$ | async )?.length }})</mat-panel-title>
-			<mat-panel-description>
-				Discard ({{ (abilityCardDisard$ | async)?.length }})
-			</mat-panel-description>
+			<mat-panel-title>Ability Cards ({{ (abilityCardDraw$ | async)?.length }})</mat-panel-title>
+			<mat-panel-description> Discard ({{ (abilityCardDisard$ | async)?.length }}) </mat-panel-description>
 		</mat-expansion-panel-header>
-		<div class="ability-card-deck-container">
-			<app-ability-card *ngFor="let abilityCard of ( abilityCardDraw$ | async)" [abilityCard]="abilityCard" class="hud-ability-card-deck-card"></app-ability-card>
+		<div
+			class="ability-card-deck-container"
+			cdkDropList
+			id="abilityCardDraw"
+			cdkDropListConnectedTo="abilityCardPlayedOnEncounter"
+			cdkDropListOrientation="horizontal"
+			[cdkDropListData]="(abilityCardDraw$ | async)"
+			(cdkDropListDropped)="handleAbilityCardDropped($event)"
+		>
+			<app-ability-card *ngFor="let abilityCard of abilityCardDraw$ | async" [abilityCard]="abilityCard" class="hud-ability-card-deck-card" cdkDrag></app-ability-card>
 		</div>
 	</mat-expansion-panel>
 </mat-accordion>

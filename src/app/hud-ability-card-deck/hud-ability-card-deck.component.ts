@@ -1,3 +1,4 @@
+import { CdkDragDrop } from '@angular/cdk/drag-drop';
 import { Component } from '@angular/core';
 
 import { Observable } from 'rxjs';
@@ -20,6 +21,13 @@ export class HudAbilityCardDeckComponent {
 	ngOnInit() {
 		this.abilityCardDraw$ = this.abilityCardService.listen('abilityCardDraw');
 		this.abilityCardDisard$ = this.abilityCardService.listen('abilityCardDiscard');
+	}
+
+	handleAbilityCardDropped(event: CdkDragDrop<any>) {
+		if (event.container !== event.previousContainer) {
+			const movedCard = this.abilityCardService.grab('encounterStage')[event.previousIndex];
+			this.abilityCardService.moveCardFromEncounterStageToDraw(movedCard, event.currentIndex);
+		}
 	}
 
 }

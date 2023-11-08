@@ -1,3 +1,4 @@
+import { DragDropModule } from '@angular/cdk/drag-drop';
 import { APP_INITIALIZER, NgModule } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
@@ -15,7 +16,11 @@ import { AbilityCardComponent } from './ability-card/ability-card.component';
 import { AbilityTypeIconComponent } from './ability-type-icon/ability-type-icon.component';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { DevToolComponent } from './dev-tool/dev-tool.component';
 import { DifficultyDisplayPipe } from './difficulty-display/difficulty-display.pipe';
+import { EncounterCardComponent } from './encounter-card/encounter-card.component';
+import { EncounterTableComponent } from './encounter-table/encounter-table.component';
+import { GameOverComponent } from './game-over/game-over.component';
 import { HudAbilityCardDeckComponent } from './hud-ability-card-deck/hud-ability-card-deck.component';
 import { HudAlertCounterComponent } from './hud-alert-counter/hud-alert-counter.component';
 import { HudAvatarComponent } from './hud-avatar/hud-avatar.component';
@@ -37,8 +42,6 @@ import { AbilityCardService } from './services/ability-card.service';
 import { AlertLevelService } from './services/alert-level.service';
 import { SkillTypeToDisplayPipe } from './skill-type-to-display/skill-type-to-display.pipe';
 import { SubscriberComponent } from './subscriber/subscriber.component';
-import { GameOverComponent } from './game-over/game-over.component';
-import { EncounterTableComponent } from './encounter-table/encounter-table.component';
 
 @NgModule({
 	declarations: [
@@ -67,8 +70,10 @@ import { EncounterTableComponent } from './encounter-table/encounter-table.compo
 		HudAbilityCardDeckComponent,
 		HudPhaseComponent,
 		HudMovementPointsComponent,
-  GameOverComponent,
-  EncounterTableComponent,
+		GameOverComponent,
+		EncounterTableComponent,
+		EncounterCardComponent,
+		DevToolComponent,
 	],
 	imports: [
 		BrowserModule,
@@ -81,6 +86,7 @@ import { EncounterTableComponent } from './encounter-table/encounter-table.compo
 		MatProgressBarModule,
 		MatSliderModule,
 		MatTabsModule,
+		DragDropModule,
 	],
 	providers: [
 		{

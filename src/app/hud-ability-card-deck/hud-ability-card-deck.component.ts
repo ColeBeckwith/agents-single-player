@@ -13,20 +13,22 @@ import { AbilityCardService } from '../services/ability-card.service';
 })
 export class HudAbilityCardDeckComponent {
 	public abilityCardDraw$: Observable<AbilityCard[]>;
-	public abilityCardDisard$: Observable<AbilityCard[]>;
+	public abilityCardDiscard$: Observable<AbilityCard[]>;
+	public abilityCardHand$: Observable<AbilityCard[]>;
 	
 	constructor(private abilityCardService: AbilityCardService) {
 	}
 
 	ngOnInit() {
 		this.abilityCardDraw$ = this.abilityCardService.listen('abilityCardDraw');
-		this.abilityCardDisard$ = this.abilityCardService.listen('abilityCardDiscard');
+		this.abilityCardDiscard$ = this.abilityCardService.listen('abilityCardDiscard');
+		this.abilityCardHand$ = this.abilityCardService.listen('abilityCardHand');
 	}
 
 	handleAbilityCardDropped(event: CdkDragDrop<any>) {
 		if (event.container !== event.previousContainer) {
 			const movedCard = this.abilityCardService.grab('encounterStage')[event.previousIndex];
-			this.abilityCardService.moveCardFromEncounterStageToDraw(movedCard, event.currentIndex);
+			this.abilityCardService.moveCardFromEncounterStageToHand(movedCard, event.currentIndex);
 		}
 	}
 

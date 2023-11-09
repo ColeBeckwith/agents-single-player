@@ -1,8 +1,8 @@
-import { AbilityCard } from '../ability-cards';
+import { AbilityCard, AbilityCardId } from '../ability-cards';
 
 export const magicCards: AbilityCard[] = [
 	{
-		id: 'flicker',
+		id: AbilityCardId.FLICKER,
 		title: 'Flicker',
 		primaryType: 'magic',
 		rarity: 1,
@@ -11,7 +11,7 @@ export const magicCards: AbilityCard[] = [
 		tags: ['Fire']
 	},
 	{
-		id: 'slow',
+		id: AbilityCardId.SLOW,
 		title: 'Slow',
 		primaryType: 'magic',
 		rarity: 1,
@@ -21,7 +21,7 @@ export const magicCards: AbilityCard[] = [
 		tags: ['Time']
 	},
 	{
-		id: 'seed-of-life',
+		id: AbilityCardId.SEED_OF_LIFE,
 		title: 'Seed of Life',
 		primaryType: 'magic',
 		rarity: 1,
@@ -32,7 +32,7 @@ export const magicCards: AbilityCard[] = [
 		tags: ['Healing']
 	},
 	{
-		id: 'transmute',
+		id: AbilityCardId.TRANSMUTE,
 		title: 'Transmute',
 		primaryType: 'magic',
 		rarity: 1,
@@ -43,7 +43,7 @@ export const magicCards: AbilityCard[] = [
 		tags: ['Transform']
 	},
 	{
-		id: 'branch-of-life',
+		id: AbilityCardId.BRANCH_OF_LIFE,
 		title: 'Branch of Life',
 		primaryType: 'magic',
 		rarity: 2,
@@ -54,7 +54,7 @@ export const magicCards: AbilityCard[] = [
 		tags: ['Healing']
 	},
 	{
-		id: 'flame',
+		id: AbilityCardId.FLAME,
 		title: 'Flame',
 		primaryType: 'magic',
 		rarity: 2,
@@ -63,7 +63,7 @@ export const magicCards: AbilityCard[] = [
 		tags: ['Fire']
 	},
 	{
-		id: 'reverse-metamorphosis',
+		id: AbilityCardId.REVERSE_METAMORPHOSIS,
 		title: 'Reverse Metamorphosis',
 		primaryType: 'magic',
 		rarity: 2,
@@ -74,7 +74,7 @@ export const magicCards: AbilityCard[] = [
 		tags: ['Time']
 	},
 	{
-		id: 'stop',
+		id: AbilityCardId.STOP,
 		title: 'Stop',
 		primaryType: 'magic',
 		rarity: 2,
@@ -84,7 +84,7 @@ export const magicCards: AbilityCard[] = [
 		tags: ['Time']
 	},
 	{
-		id: 'summoning-ritual',
+		id: AbilityCardId.SUMMONING_RITUAL,
 		title: 'Summoning Ritual',
 		primaryType: 'magic',
 		rarity: 3,
@@ -94,7 +94,7 @@ export const magicCards: AbilityCard[] = [
 		consumeText: 'Change the current encounter to an encounter for which Magic is a Strong Type.'
 	},
 	{
-		id: 'teleport',
+		id: AbilityCardId.TELEPORT,
 		title: 'Teleport',
 		primaryType: 'magic',
 		rarity: 3,
@@ -104,7 +104,7 @@ export const magicCards: AbilityCard[] = [
 		consumeText: 'Move to any discovered square',
 	},
 	{
-		id: 'blaze',
+		id: AbilityCardId.BLAZE,
 		title: 'Blaze',
 		primaryType: 'magic',
 		rarity: 3,
@@ -113,7 +113,7 @@ export const magicCards: AbilityCard[] = [
 		tags: ['Fire']
 	},
 	{
-		id: 'rewind',
+		id: AbilityCardId.REWIND,
 		title: 'Rewind',
 		primaryType: 'magic',
 		rarity: 3,
@@ -123,7 +123,7 @@ export const magicCards: AbilityCard[] = [
 			'After resolving the encounter, return all other cards played on this encounter into your inventory. Only one Rewind may be played per encounter.',
 	},
 	{
-		id: 'inferno',
+		id: AbilityCardId.INFERNO,
 		title: 'Inferno',
 		primaryType: 'magic',
 		rarity: 3,
@@ -133,7 +133,7 @@ export const magicCards: AbilityCard[] = [
 		tags: ['Fire']
 	},
 	{
-		id: 'tree-of-life',
+		id: AbilityCardId.TREE_OF_LIFE,
 		title: 'Tree of Life',
 		primaryType: 'magic',
 		rarity: 3,

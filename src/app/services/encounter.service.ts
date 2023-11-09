@@ -9,7 +9,7 @@ import { RocXService } from '../roc-x/roc-x.service';
 export class EncounterService extends RocXService {
 	constructor() {
 		super({
-			activeEncounter: null,
+			activeEncounter: null
 		});
 	}
 

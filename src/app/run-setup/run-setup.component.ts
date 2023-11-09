@@ -31,7 +31,7 @@ export class RunSetupComponent {
 					this.selectedCharacter
 			  )
 			: this.characterService.initializeRandomCharacter();
-		this.mapService.generateMap(12, 12, 0.3);
+		this.mapService.generateMap(10, 10, 0.3);
 		this.phaseService.startNewGame();
 		this.router.navigate(['/run']);
 	}

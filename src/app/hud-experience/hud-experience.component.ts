@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 
-import { CharacterService, PlayerCharacter } from '../services/character.service';
+import { Observable } from 'rxjs';
+
+import { CharacterService } from '../services/character.service';
 
 @Component({
 	selector: 'app-hud-experience',
@@ -8,13 +10,9 @@ import { CharacterService, PlayerCharacter } from '../services/character.service
 	styleUrls: ['./hud-experience.component.scss'],
 })
 export class HudExperienceComponent {
-	public playerCharacter: PlayerCharacter;
+	public experience$: Observable<number>;
 
 	constructor(private characterService: CharacterService) {
-		this.characterService
-			.listen('playerCharacter')
-			.subscribe((playerCharacter) => {
-				this.playerCharacter = playerCharacter;
-			});
+		this.experience$ = this.characterService.listen('experience');
 	}
 }

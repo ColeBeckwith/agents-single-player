@@ -1,8 +1,8 @@
-import { AbilityCard } from '../ability-cards';
+import { AbilityCard, AbilityCardId } from '../ability-cards';
 
 export const combatCards: AbilityCard[] = [
 	{
-		id: 'aimed-shot',
+		id: AbilityCardId.AIMED_SHOT,
 		title: 'Aimed Shot',
 		primaryType: 'combat',
 		rarity: 1,
@@ -10,7 +10,16 @@ export const combatCards: AbilityCard[] = [
 		encounterValue: 2,
 	},
 	{
-		id: 'observe-tactics',
+		id: AbilityCardId.AKIMBO,
+		title: 'Akimbo',
+		primaryType: 'combat',
+		cost: 1,
+		rarity: 1,
+		encounterValue: 1,
+		encounterText: 'Encounter Value is doubled if played with exactly one other Akimbo.'
+	},
+	{
+		id: AbilityCardId.OBSERVE_TACTICS,
 		title: 'Observe Tactics',
 		primaryType: 'combat',
 		rarity: 1,
@@ -19,7 +28,7 @@ export const combatCards: AbilityCard[] = [
 		encounterText: '+2 Combat Skill Points',
 	},
 	{
-		id: 'charge',
+		id: AbilityCardId.CHARGE,
 		title: 'Charge',
 		primaryType: 'combat',
 		rarity: 1,
@@ -29,7 +38,7 @@ export const combatCards: AbilityCard[] = [
 		consumeText: 'Movement +2',
 	},
 	{
-		id: 'improvised-weapon',
+		id: AbilityCardId.IMPROVISED_WEAPON,
 		title: 'Improvised Weapon',
 		primaryType: 'combat',
 		rarity: 1,
@@ -38,7 +47,7 @@ export const combatCards: AbilityCard[] = [
 		encounterText: 'Encounter Value is reduced by 2 each time it is used.',
 	},
 	{
-		id: 'mag-dump',
+		id: AbilityCardId.MAG_DUMP,
 		title: 'Mag Dump',
 		primaryType: 'combat',
 		rarity: 1,
@@ -47,7 +56,7 @@ export const combatCards: AbilityCard[] = [
 		encounterText: 'Cannot be played with any other Combat Type cards.',
 	},
 	{
-		id: 'suppression',
+		id: AbilityCardId.SUPRESSION,
 		title: 'Suppression',
 		primaryType: 'combat',
 		rarity: 1,
@@ -56,7 +65,7 @@ export const combatCards: AbilityCard[] = [
 		encounterText: 'If total encounter value is within 4 of required value, ignore any negative health effects from the encounter card.',
 	},
 	{
-		id: 'momentum',
+		id: AbilityCardId.MOMENTUM,
 		title: 'Momentum',
 		primaryType: 'combat',
 		rarity: 2,
@@ -65,7 +74,7 @@ export const combatCards: AbilityCard[] = [
 		encounterText: '+1 Encounter Value for each other card played in this enounter. Creates a copy of itself '
 	},
 	{
-		id: 'flamethrower',
+		id: AbilityCardId.FLAMETHROWER,
 		title: 'Flamethrower',
 		primaryType: 'combat',
 		rarity: 2,
@@ -74,7 +83,7 @@ export const combatCards: AbilityCard[] = [
 		tags: ['Fire'],
 	},
 	{
-		id: 'improvised-explosive',
+		id: AbilityCardId.IMPROVISED_EXPLOSIVE,
 		title: 'Improvised Explosive',
 		primaryType: 'combat',
 		rarity: 2,
@@ -83,7 +92,7 @@ export const combatCards: AbilityCard[] = [
 		encounterText: 'You must discard 1 ability card in order to play this.',
 	},
 	{
-		id: 'grenade',
+		id: AbilityCardId.GRENADE,
 		title: 'Grenade',
 		primaryType: 'combat',
 		rarity: 2,
@@ -92,7 +101,7 @@ export const combatCards: AbilityCard[] = [
 		encounterText: 'Alert Level +1.',
 	},
 	{
-		id: 'berserk',
+		id: AbilityCardId.BERSERK,
 		title: 'Berserk',
 		primaryType: 'combat',
 		rarity: 3,
@@ -101,7 +110,7 @@ export const combatCards: AbilityCard[] = [
 		encounterText: 'Health -1.',
 	},
 	{
-		id: 'tend-wounds',
+		id: AbilityCardId.TEND_WOUNDS,
 		title: 'Tend Wounds',
 		primaryType: 'combat',
 		rarity: 3,
@@ -110,7 +119,7 @@ export const combatCards: AbilityCard[] = [
 		encounterText: 'Health +3.',
 	},
 	{
-		id: 'departing-gift',
+		id: AbilityCardId.DEPARTING_GIFT,
 		title: 'Departing Gift',
 		primaryType: 'combat',
 		rarity: 3,

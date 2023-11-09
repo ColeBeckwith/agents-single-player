@@ -2,10 +2,11 @@
 	display: flex;
 	flex-direction: row;
 	align-items: center;
+	margin-top: -212px;
 }
 
 .ability-card-played-cards-display {
-	height: 300px;
+	height: 340px;
 	width: 60vw;
 	background-color: white;
 	border-radius: 4px;
@@ -13,6 +14,7 @@
     align-items: center;
     display: flex;
 	flex-direction: column;
+	justify-content: center;
 	margin-left: 8px;
 	border: 2px solid black;
 }
@@ -25,6 +27,22 @@
 	overflow-x: scroll;
 
 	app-ability-card {
-		margin: 0 8px;
+		margin: 0 4px;
 	}
+}
+
+.encounter-stage-actions {
+	padding: 8px;
+}
+
+.encounter-stage-finish-button {
+	margin-left: 8px;
+}
+
+.current-value-display--failing {
+	color: red;
+}
+
+.current-value-display--passing {
+	color: green;
 }

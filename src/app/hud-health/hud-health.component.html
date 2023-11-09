@@ -1,2 +1,5 @@
-<mat-progress-spinner [color]="'warn'" [value]="playerCharacter.stats.currentHealth/playerCharacter.stats.maxHealth * 100"></mat-progress-spinner>
-<span class="hud-health-text-display">{{ playerCharacter.stats.currentHealth }}/{{ playerCharacter.stats.maxHealth }}</span>
+<mat-progress-spinner
+	[color]="'warn'"
+	[value]="((currentHealth$ | async)! / (maxHealth$ | async)!) * 100"
+></mat-progress-spinner>
+<span class="hud-health-text-display">{{ currentHealth$ | async }}/{{ maxHealth$ | async }}</span>

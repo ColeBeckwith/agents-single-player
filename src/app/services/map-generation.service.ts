@@ -10,14 +10,14 @@ import { Cell, Map } from './map.service';
 export class MapGenerationService {
 	constructor(private mapUtilitiesService: MapUtilitiesService, private encounterCardService: EncounterCardService) {}
 
-	public generateMap(height: number, width: number, buildDensity: number = 0.3): Map {
+	public generateMapV2(height: number, width: number, buildDensity: number = 0.3): Map {
 		let builtSquares = 0;
 		let map: Cell[][] = [];
 		// Create the board with a bunch of default cells without any characteristics.
 		for (let y = 0; y < height; y++) {
 			let row = [];
 			for (let x = 0; x < width; x++) {
-				row.push(<Cell>{
+				row.push({
 					start: false,
 					built: false,
 					xCoordinate: x,
@@ -26,126 +26,105 @@ export class MapGenerationService {
 					exit: false,
 					assigned: true,
 					encounter: false,
-					encounterDifficulty: 1,
+					encounterDifficulty: null,
 					assignedEncounter: null,
 					encounterCleared: false,
 					loot: false,
 					lootRarity: 0,
 					boon: false,
 					playerOccupies: false,
+					refresh: false,
 				});
 			}
 			map.push(row);
 		}
-		// pick a starting square somewhere in the first column.
-		const startingSquareRow = Math.floor(Math.random() * (height - 4)) + 2;
-		const startingSquare = map[startingSquareRow][0];
-		startingSquare.start = true;
-		startingSquare.built = true;
-		startingSquare.assigned = true;
-		startingSquare.playerOccupies = true;
+		// Start in the center of the board.
+		const startingX = Math.ceil(width / 2);
+		const startingY = Math.ceil(height / 2);
+		let currentCell = <Cell>this.mapUtilitiesService.getCellOnMapFromCoordinates(map, startingX, startingY);
+		currentCell.built = true;
+		currentCell.assigned = false;
 		builtSquares++;
-		let currentSquare = startingSquare;
-
-		let forks: { xCoordinate: number; yCoordinate: number }[] = [];
-
-		const goToNextFork = () => {
-			// const middleFork = forks[Math.floor(forks.length / 2)];
-			// currentSquare = map[middleFork.yCoordinate][middleFork.xCoordinate];
-			// forks = forks.filter((fork) => fork !== middleFork);
-
-			const firstFork = forks[0];
-			currentSquare = map[firstFork.yCoordinate][firstFork.xCoordinate];
-			forks.shift();
-		};
+		let attempts = 0;
 
 		while (builtSquares < height * width * buildDensity) {
-			// if this square is in the final column start going back to the last fork and build from there.
-			if (currentSquare.xCoordinate === width - 1) {
-				if (forks.length > 0) {
-					goToNextFork();
-				} else {
-					break;
-				}
-			} else {
-				// check which directions are possible...
-				const downPossible = currentSquare.yCoordinate !== height - 1 && map[currentSquare.yCoordinate + 1][currentSquare.xCoordinate].built !== true;
-				const upPossible = currentSquare.yCoordinate !== 0 && map[currentSquare.yCoordinate - 1][currentSquare.xCoordinate].built !== true;
-				const rightPossible = currentSquare.xCoordinate !== width - 1 && map[currentSquare.yCoordinate][currentSquare.xCoordinate + 1].built !== true;
-
-				if (!downPossible && !upPossible && !rightPossible) {
-					if (forks.length > 0) {
-						goToNextFork();
-					} else {
-						break;
-					}
-				} else {
-					// Give a chance to split the path.
-					const forking = Math.random() > 0.82;
-					if (forking) {
-						forks.push({
-							xCoordinate: currentSquare.xCoordinate,
-							yCoordinate: currentSquare.yCoordinate,
-						});
-					}
-
-					// ... do some RNG to see which direction the path will go...
-					let goingUp = false;
-					let goingDown = false;
-					let goingRight = false;
-					let chance = Math.random();
-					// Based on what is possible, decide which way to go. Generally prefer horizontal movement to vertical.
-					if (downPossible && upPossible && rightPossible) {
-						goingUp = chance <= 0.25;
-						goingDown = chance > 0.25 && chance <= 0.5;
-						goingRight = chance > 0.5;
-					} else if (downPossible && upPossible && !rightPossible) {
-						goingUp = chance <= 0.5;
-						goingDown = chance > 0.5;
-					} else if (downPossible && rightPossible && !upPossible) {
-						goingRight = chance > 0.6;
-						goingDown = chance <= 0.4;
-					} else if (upPossible && rightPossible && !downPossible) {
-						goingRight = chance > 0.6;
-						goingUp = chance <= 0.4;
-					} else if (rightPossible && !downPossible && !upPossible) {
-						goingRight = true;
-					} else if (upPossible && !rightPossible && !downPossible) {
-						goingUp = true;
-					} else if (downPossible && !upPossible && !rightPossible) {
-						goingDown = true;
-					}
-
-					// ...set that next square to the current square and mark it built...
-					if (goingUp) {
-						currentSquare = map[currentSquare.yCoordinate - 1][currentSquare.xCoordinate];
-					} else if (goingDown) {
-						currentSquare = map[currentSquare.yCoordinate + 1][currentSquare.xCoordinate];
-					} else if (goingRight) {
-						currentSquare = map[currentSquare.yCoordinate][currentSquare.xCoordinate + 1];
-					}
-
-					currentSquare.built = true;
-					currentSquare.assigned = false;
+			attempts++;
+			if (attempts > 1000) {
+				break;
+			}
+			const chanceForDirection = Math.random();
+			const goingUp = chanceForDirection <= 0.25;
+			const goingDown = chanceForDirection > 0.25 && chanceForDirection <= 0.5;
+			const goingRight = chanceForDirection > 0.5 && chanceForDirection <= 0.75;
+			const goingLeft = chanceForDirection > 0.75;
+			let nextCell: Cell | undefined;
+			if (goingUp) {
+				nextCell = this.mapUtilitiesService.getCellOnMapFromCoordinates(
+					map,
+					currentCell.xCoordinate,
+					currentCell.yCoordinate - 1
+				);
+			}
+			if (goingDown) {
+				nextCell = this.mapUtilitiesService.getCellOnMapFromCoordinates(
+					map,
+					currentCell.xCoordinate,
+					currentCell.yCoordinate + 1
+				);
+			}
+			if (goingRight) {
+				nextCell = this.mapUtilitiesService.getCellOnMapFromCoordinates(
+					map,
+					currentCell.xCoordinate + 1,
+					currentCell.yCoordinate
+				);
+			}
+			if (goingLeft) {
+				nextCell = this.mapUtilitiesService.getCellOnMapFromCoordinates(
+					map,
+					currentCell.xCoordinate - 1,
+					currentCell.yCoordinate
+				);
+			}
+			if (nextCell) {
+				if (!nextCell.built) {
+					nextCell.built = true;
+					nextCell.assigned = false;
 					builtSquares++;
 				}
+				currentCell = nextCell;
 			}
 		}
-
+		
 		if (builtSquares < height * width * buildDensity) {
-			// The algorithm failed to build a dense enough map.
-			console.warn('Unable to construct valid map. Final map result:');
-			console.warn(map);
-			// Try again.
-			return this.generateMap(height, width, buildDensity);
-		} else {
-			return map;
+			console.error('Failed to build a dense enough map. Retrying.');
+			return this.generateMapV2(height, width, buildDensity);
 		}
+
+		const builtCells = this.mapUtilitiesService.getAllBuiltCellsInMap(map);
+
+		builtCells.sort((a, b) => a.xCoordinate - b.xCoordinate);
+		builtCells[0].start = true;
+		builtCells[0].assigned = true;
+		builtCells[0].playerOccupies = true;
+
+		return map;
 	}
 
-	public addFeaturesToMap(map: Cell[][], height: number, width: number, encounterDensity: number, encounterDifficultyModifier: number, lootDensity: number, boonDensity: number) {
+	public addFeaturesToMap(
+		map: Cell[][],
+		height: number,
+		width: number,
+		encounterDensity: number,
+		encounterDifficultyModifier: number,
+		lootDensity: number,
+		boonDensity: number,
+		numberOfRefreshes: number
+	) {
 		if (encounterDensity + lootDensity + boonDensity > 1) {
-			console.error('Invalid Map Request: Encounter Density, Loot Density and Boon Density combined are greater than 100%.');
+			console.error(
+				'Invalid Map Request: Encounter Density, Loot Density and Boon Density combined are greater than 100%.'
+			);
 		}
 		const allBuiltCells = this.mapUtilitiesService.getAllBuiltCellsInMap(map);
 		const startingCell = <Cell>allBuiltCells.find((cell) => cell.start);
@@ -154,20 +133,39 @@ export class MapGenerationService {
 			cell.distanceToStart = this.mapUtilitiesService.getTravelDistanceFromPointToPoint(map, startingCell, cell);
 		});
 
-		const desiredExitDistance = height + width;
+		const desiredExitDistance = (height + width) / 2;
 		// Sort all cells by their closeness to the desired exit distance.
-		allBuiltCells.sort((a, b) => Math.abs(a.distanceToStart - desiredExitDistance) - Math.abs(b.distanceToStart - desiredExitDistance));
+		allBuiltCells.sort(
+			(a, b) => Math.abs(a.distanceToStart - desiredExitDistance) - Math.abs(b.distanceToStart - desiredExitDistance)
+		);
 		// pick the first one to be the exit.
 		const exit = allBuiltCells[0];
 		exit.exit = true;
 		exit.assigned = true;
 
-		const unassignedCells = allBuiltCells.filter((cell) => !cell.assigned);
+		let unassignedCells = allBuiltCells.filter((cell) => !cell.assigned);
+
+		for (let i = 0; i < numberOfRefreshes; i++) {
+			const desiredRefreshDistance = (((height + width) / 2) * (i + 1)) / (numberOfRefreshes + 1);
+			unassignedCells.sort(
+				(a, b) =>
+					Math.abs(a.distanceToStart - desiredRefreshDistance) - Math.abs(b.distanceToStart - desiredRefreshDistance)
+			);
+			const refreshCell = unassignedCells[0];
+			refreshCell.refresh = true;
+			refreshCell.assigned = true;
+		}
+
+		unassignedCells = unassignedCells.filter((cell) => !cell.assigned);
 
 		// Assign encounter, loot and boons to unassigned cells.
-		const chanceSchedule = [encounterDensity, encounterDensity + lootDensity, encounterDensity + lootDensity + boonDensity];
-		const invertedModifier = 1 / encounterDifficultyModifier;
-		const encounterDifficultySchedule = [0 * invertedModifier, 0.6 * invertedModifier, 0.95 * invertedModifier, 1.3 * invertedModifier];
+		const chanceSchedule = [
+			encounterDensity,
+			encounterDensity + lootDensity,
+			encounterDensity + lootDensity + boonDensity,
+		];
+
+		const encounterDifficultySchedule = [0, 1, 2, 3];
 		const lootRaritySchedule = [0, 0.9];
 		unassignedCells.forEach((unassignedCell) => {
 			const chanceForAssignment = Math.random();
@@ -175,9 +173,15 @@ export class MapGenerationService {
 			if (chanceForAssignment < chanceSchedule[0]) {
 				unassignedCell.encounter = true;
 				// Use half of the boards dimensions so that we end up easier encounters at the beginning of the map and more difficult ones at the end.
-				const chanceForEncounterDifficulty = Math.random() * (unassignedCell.distanceToStart / ((height + width) / 3));
-				unassignedCell.encounterDifficulty = <1 | 2 | 3 | 4>encounterDifficultySchedule.filter((tier) => tier < chanceForEncounterDifficulty).length;
-				unassignedCell.assignedEncounter = this.encounterCardService.getRandomEncounterCard(unassignedCell.encounterDifficulty);
+				// const chanceForEncounterDifficulty = Math.random() * (unassignedCell.distanceToStart / ((height + width) / 3));
+				let chanceForEncounterDifficulty = Math.random() + encounterDifficultyModifier;
+				chanceForEncounterDifficulty = Math.max(0, chanceForEncounterDifficulty);
+				unassignedCell.encounterDifficulty = <1 | 2 | 3 | 4>(
+					encounterDifficultySchedule.filter((tier) => tier <= chanceForEncounterDifficulty).length
+				);
+				unassignedCell.assignedEncounter = this.encounterCardService.getRandomEncounterCard(
+					unassignedCell.encounterDifficulty
+				);
 			} else if (chanceForAssignment < chanceSchedule[1]) {
 				unassignedCell.loot = true;
 				const chanceForLootRarity = Math.random();

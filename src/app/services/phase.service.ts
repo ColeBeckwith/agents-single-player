@@ -11,7 +11,7 @@ export class PhaseService extends RocXService {
 			abilityCardDrafting: false,
 			movement: false,
 			encounter: false,
-			alertLevel: false
+			alertLevel: false,
 		});
 	}
 
@@ -35,6 +35,11 @@ export class PhaseService extends RocXService {
 
 	public completeAlertLevelPhase() {
 		this.set('alertLevel', false);
+		this.set('movement', true);
+	}
+
+	public completeEncounterPhase() {
+		this.set('encounter', false);
 		this.set('movement', true);
 	}
 }

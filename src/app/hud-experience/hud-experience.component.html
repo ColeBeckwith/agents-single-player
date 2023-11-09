@@ -1,5 +1,1 @@
-<mat-progress-bar
-	[value]="playerCharacter.stats.experience"
-	[mode]="'determinate'"
-	[color]="'accent'"
-></mat-progress-bar>
+<mat-progress-bar [value]="experience$ | async" [mode]="'determinate'" [color]="'accent'"></mat-progress-bar>

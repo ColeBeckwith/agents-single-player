@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 
 import { EncounterCard } from '../card-data/encounter-cards';
 import { RocXService } from '../roc-x/roc-x.service';
-import { CharacterService, PlayerCharacter } from './character.service';
+import { CharacterService } from './character.service';
 import { EncounterService } from './encounter.service';
 import { MapGenerationService } from './map-generation.service';
 import { MapUtilitiesService } from './map-utilities.service';
@@ -27,8 +27,8 @@ export interface Cell {
 	assigned: boolean;
 	// whether an encounter exists on this square
 	encounter: boolean;
-	// the level of the encounter if it exists. 0 if it does not.
-	encounterDifficulty: 1 | 2 | 3 | 4;
+	// the level of the encounter if it exists.
+	encounterDifficulty: 1 | 2 | 3 | 4 | null;
 	// The encounter card representing the encounter if there is one.
 	assignedEncounter: EncounterCard | null;
 	// whether an encounter has been cleared on this square
@@ -37,6 +37,8 @@ export interface Cell {
 	lootRarity: number;
 	boon: boolean;
 	playerOccupies: boolean;
+	// Whether the cell is a refresh cell
+	refresh: boolean;
 }
 
 @Injectable({
@@ -54,12 +56,8 @@ export class MapService extends RocXService {
 
 		this.phaseService.listen('movement').subscribe((movementPhase) => {
 			if (movementPhase === true) {
-				const playerCharacter: PlayerCharacter =
-					this.characterService.grab('playerCharacter');
-				this.set(
-					'movementPoints',
-					playerCharacter.stats.defaultMovementPoints
-				);
+				const defaultMovementPoints = this.characterService.grab('defaultMovementPoints');
+				this.set('movementPoints', defaultMovementPoints);
 			} else {
 				this.set('movementPoints', 0);
 			}
@@ -119,16 +117,12 @@ export class MapService extends RocXService {
 		height: number,
 		width: number,
 		buildDensity: number = 0.3,
-		encounterDensity: number = 0.3,
-		encounterDifficultyModifier: number = 1,
-		lootDensity: number = 0.05,
-		boonDensity: number = 0.05
+		encounterDensity: number = 0.6,
+		encounterDifficultyModifier: number = 0,
+		lootDensity: number = 0.1,
+		boonDensity: number = 0.1
 	) {
-		const builtMap = this.mapGenerationService.generateMap(
-			height,
-			width,
-			buildDensity
-		);
+		const builtMap = this.mapGenerationService.generateMapV2(height, width, buildDensity);
 
 		const builtMapWithFeatures = this.mapGenerationService.addFeaturesToMap(
 			builtMap,
@@ -137,11 +131,22 @@ export class MapService extends RocXService {
 			encounterDensity,
 			encounterDifficultyModifier,
 			lootDensity,
-			boonDensity
+			boonDensity,
+			1
 		);
 		this.set('currentMap', builtMapWithFeatures);
 	}
 
+	public removeEncounterByMint(mint: number) {
+		const currentMap = this.grab('currentMap');
+		const allBuiltCells = this.mapUtilitiesService.getAllBuiltCellsInMap(currentMap);
+		const cellContainingEncouter = allBuiltCells.find(builtCell => builtCell.assignedEncounter?.mint === mint);
+		if (cellContainingEncouter) {
+			cellContainingEncouter.assignedEncounter = null;
+			cellContainingEncouter.encounter = false;
+			this.updateCellsInCurrentMap([cellContainingEncouter]);
+		}
+	}
 
 	private updateCellsInCurrentMap(cells: Cell[]) {
 		const map = this.grab('currentMap');
@@ -149,9 +154,7 @@ export class MapService extends RocXService {
 	}
 
 	private getPlayerOccupiedCellInCurrentMap(): Cell | undefined {
-		const cellsInCurrentMap = this.mapUtilitiesService.getAllBuiltCellsInMap(
-			this.grab('currentMap')
-		);
+		const cellsInCurrentMap = this.mapUtilitiesService.getAllBuiltCellsInMap(this.grab('currentMap'));
 		return cellsInCurrentMap.find((cell) => cell.playerOccupies);
 	}
 

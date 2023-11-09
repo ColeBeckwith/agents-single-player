@@ -1,4 +1,5 @@
 import { AbilityCard } from './ability-cards';
+import { jakobsDeck } from './starting-decks';
 
 export interface BaseCharacter {
 	id: string;
@@ -32,45 +33,7 @@ export const baseCharacters: BaseCharacter[] = [
 			tech: 0,
 		},
 		locked: false,
-		startingDeck: [
-			{
-				id: 'run-n-gun',
-				title: 'Run\'n\'Gun',
-				primaryType: 'combat',
-				cost: 0,
-				rarity: 1,
-				encounterValue: 1,
-				consumable: true,
-				consumeText: '+1 Movement Point'
-			},
-			{
-				id: 'an-unquiet-man',
-				title: 'An Unquiet Man',
-				primaryType: 'combat',
-				cost: 0,
-				rarity: 1,
-				encounterValue: 2,
-				encounterText: '+1 Alert Level'
-			},
-			{
-				id: 'an-unquiet-man',
-				title: 'An Unquiet Man',
-				primaryType: 'combat',
-				cost: 0,
-				rarity: 1,
-				encounterValue: 2,
-				encounterText: '+1 Alert Level'
-			},
-			{
-				id: 'enough-to-be-dangerous',
-				title: 'Enough To Be Dangerous',
-				primaryType: 'combat',
-				secondaryTypes: ['magic'],
-				cost: 0,
-				rarity: 1,
-				encounterValue: 2,
-			}
-		]
+		startingDeck: jakobsDeck
 	},
 	{
 		id: 'cane',

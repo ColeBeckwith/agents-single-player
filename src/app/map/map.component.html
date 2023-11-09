@@ -1,3 +1,3 @@
-<ng-container *ngIf="map">
+<div class="agents-map" *ngIf="map" cdkDrag>
 	<app-map-row *ngFor="let row of map" [row]="row"></app-map-row>
-</ng-container>
+</div>

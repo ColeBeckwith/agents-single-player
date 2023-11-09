@@ -11,12 +11,12 @@ import { PhaseService } from './phase.service';
 })
 export class AlertLevelService extends RocXService {
 	// The time of the alert level phase in milliseconds.
-	public alertLevelPhaseDuration = 3000;
+	public alertLevelPhaseDuration = 1500;
 
 	constructor(private phaseService: PhaseService,
 			private characterService: CharacterService) {
 		super({
-			alertLevel: 1,
+			alertLevel: -10,
 		});
 
 		this.phaseService
@@ -36,5 +36,11 @@ export class AlertLevelService extends RocXService {
 					}, this.alertLevelPhaseDuration / 3);
 				}, this.alertLevelPhaseDuration / 3);
 			});
+	}
+
+	public adjustAlertLevel(numberToAdjustBy: number) {
+		let alertLevel = this.grab('alertLevel');
+		alertLevel += numberToAdjustBy;
+		this.set('alertLevel', alertLevel);
 	}
 }

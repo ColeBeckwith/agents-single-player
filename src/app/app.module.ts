@@ -40,6 +40,7 @@ import { RunComponent } from './run/run.component';
 import { ScenarioSelectComponent } from './scenario-select/scenario-select.component';
 import { AbilityCardService } from './services/ability-card.service';
 import { AlertLevelService } from './services/alert-level.service';
+import { EncounterResolutionService } from './services/encounter-resolution.service';
 import { SkillTypeToDisplayPipe } from './skill-type-to-display/skill-type-to-display.pipe';
 import { SubscriberComponent } from './subscriber/subscriber.component';
 
@@ -91,7 +92,7 @@ import { SubscriberComponent } from './subscriber/subscriber.component';
 	providers: [
 		{
 			provide: APP_INITIALIZER,
-			deps: [AbilityCardService, AlertLevelService],
+			deps: [AbilityCardService, AlertLevelService, EncounterResolutionService],
 			useFactory: () => null,
 		},
 	],

@@ -19,6 +19,9 @@ export abstract class RocXService {
 	}
 
 	public grab(propertyName: string): any {
+		if (!(propertyName in this.synchronousState)) {
+			this.throwPropertyDoesNotExistError(propertyName);
+		}
 		return deepClone(this.synchronousState[propertyName]);
 	}
 
@@ -27,7 +30,7 @@ export abstract class RocXService {
 			this.throwPropertyDoesNotExistError(propertyName);
 		}
 		this.synchronousState[propertyName] = newValue;
-		this.observableState[propertyName].pipe(take(1)).subscribe(currentValue => {
+		this.observableState[propertyName].pipe(take(1)).subscribe((currentValue) => {
 			if (newValue !== currentValue) {
 				this.observableState[propertyName].next(newValue);
 			}
@@ -55,7 +58,7 @@ export abstract class RocXService {
 	}
 
 	private enableDevMode() {
-		document.addEventListener('keydown', event => {
+		document.addEventListener('keydown', (event) => {
 			if (event.key === 'Z' && event.shiftKey) {
 				console.log(this.synchronousState);
 				console.log(this.observableState);

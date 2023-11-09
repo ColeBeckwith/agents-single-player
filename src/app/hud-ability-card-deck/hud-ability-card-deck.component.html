@@ -1,19 +1,50 @@
 <mat-accordion>
 	<mat-expansion-panel hideToggle>
 		<mat-expansion-panel-header>
-			<mat-panel-title>Ability Cards ({{ (abilityCardDraw$ | async)?.length }})</mat-panel-title>
-			<mat-panel-description> Discard ({{ (abilityCardDisard$ | async)?.length }}) </mat-panel-description>
+			<mat-panel-title>Ability Cards</mat-panel-title>
 		</mat-expansion-panel-header>
-		<div
-			class="ability-card-deck-container"
-			cdkDropList
-			id="abilityCardDraw"
-			cdkDropListConnectedTo="abilityCardPlayedOnEncounter"
-			cdkDropListOrientation="horizontal"
-			[cdkDropListData]="(abilityCardDraw$ | async)"
-			(cdkDropListDropped)="handleAbilityCardDropped($event)"
-		>
-			<app-ability-card *ngFor="let abilityCard of abilityCardDraw$ | async" [abilityCard]="abilityCard" class="hud-ability-card-deck-card" cdkDrag></app-ability-card>
+		<div class="ability-card-deck-display-container">
+			<mat-tab-group>
+				<mat-tab label="Hand">
+					<div
+						class="ability-card-deck-container"
+						cdkDropList
+						id="abilityCardHand"
+						cdkDropListConnectedTo="abilityCardPlayedOnEncounter"
+						cdkDropListOrientation="horizontal"
+						[cdkDropListData]="abilityCardDraw$ | async"
+						(cdkDropListDropped)="handleAbilityCardDropped($event)"
+					>
+						<app-ability-card
+							*ngFor="let abilityCard of abilityCardHand$ | async"
+							[abilityCard]="abilityCard"
+							class="hud-ability-card-deck-card"
+							cdkDrag
+						>
+						</app-ability-card>
+					</div>
+				</mat-tab>
+				<mat-tab label="Draw">
+					<div class="ability-card-deck-container">
+						<app-ability-card
+							*ngFor="let abilityCard of abilityCardDraw$ | async"
+							[abilityCard]="abilityCard"
+							class="hud-ability-card-deck-card"
+						>
+						</app-ability-card>
+					</div>
+				</mat-tab>
+				<mat-tab label="Discard">
+					<div class="ability-card-deck-container">
+						<app-ability-card
+							*ngFor="let abilityCard of abilityCardDiscard$ | async"
+							[abilityCard]="abilityCard"
+							class="hud-ability-card-deck-card hud-ability-card-deck-card--discard"
+						>
+						</app-ability-card>
+					</div>
+				</mat-tab>
+			</mat-tab-group>
 		</div>
 	</mat-expansion-panel>
 </mat-accordion>

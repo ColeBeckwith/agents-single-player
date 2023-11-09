@@ -7,10 +7,24 @@
 		class="encounter-stage-ability-cards-container"
 		cdkDropList
 		id="abilityCardPlayedOnEncounter"
-		cdkDropListConnectedTo="abilityCardDraw"
+		cdkDropListConnectedTo="abilityCardHand"
 		cdkDropListOrientation="horizontal"
 		(cdkDropListDropped)="handleAbilityCardDropped($event)"
 	>
-		<app-ability-card *ngFor="let abilityCard of encounterStage$ | async" [abilityCard]="abilityCard" class="hud-ability-card-deck-card" cdkDrag></app-ability-card>
+		<app-ability-card
+			*ngFor="let abilityCard of encounterStage$ | async"
+			[abilityCard]="abilityCard"
+			cdkDrag
+		></app-ability-card>
+	</div>
+	<div class="encounter-stage-actions">
+		<span
+			class="current-value-display"
+			[class.current-value-display--failing]="!passing"
+			[class.current-value-display--passing]="passing"
+		>
+			Current Value: {{ stagedValue$ | async }}
+		</span>
+		<button mat-raised-button class="encounter-stage-finish-button" (click)="submitStagedCards()">Finish</button>
 	</div>
 </div>

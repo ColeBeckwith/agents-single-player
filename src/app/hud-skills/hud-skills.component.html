@@ -1,4 +1,4 @@
-<span class="stat-line">Magic: {{ playerCharacter.stats.skills.magic }} ({{ playerCharacter.stats.skillPoints.magic }})</span>
-<span class="stat-line">Tech: {{ playerCharacter.stats.skills.tech }} ({{ playerCharacter.stats.skillPoints.tech }})</span>
-<span class="stat-line">Combat: {{ playerCharacter.stats.skills.combat }} ({{ playerCharacter.stats.skillPoints.combat }})</span>
-<span class="stat-line">Stealth: {{ playerCharacter.stats.skills.stealth }} ({{ playerCharacter.stats.skillPoints.stealth }})</span>
+<span class="stat-line">Magic: {{ magicStat$ | async }} ({{ magicPoints$ | async }})</span>
+<span class="stat-line">Tech: {{ techStat$ | async }} ({{ techPoints$ | async }})</span>
+<span class="stat-line">Combat: {{ combatStat$ | async }} ({{ combatPoints$ | async }})</span>
+<span class="stat-line">Stealth: {{ stealthStat$ | async }} ({{ stealthPoints$ | async }})</span>

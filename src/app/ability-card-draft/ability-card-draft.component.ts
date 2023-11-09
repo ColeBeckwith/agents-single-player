@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 
-import { Observable, takeUntil } from 'rxjs';
+import { Observable } from 'rxjs';
 
 import { AbilityCard } from '../card-data/ability-cards';
 import { AbilityCardDraftService } from '../services/ability-card-draft.service';
@@ -15,8 +15,9 @@ import { SubscriberComponent } from '../subscriber/subscriber.component';
 })
 export class AbilityCardDraftComponent extends SubscriberComponent {
 	public draftableCards$: Observable<AbilityCard[]>;
-	public playerCredits: number;
 	public playerCharacter$: Observable<PlayerCharacter>;
+	public playerCredits$: Observable<number>;
+	public playerSkillPoints$: Observable<any>;
 
 	constructor(
 		private abilityCardDraftService: AbilityCardDraftService,
@@ -27,20 +28,15 @@ export class AbilityCardDraftComponent extends SubscriberComponent {
 	}
 
 	ngOnInit() {
-		this.draftableCards$ =
-			this.abilityCardDraftService.listen('draftableCards');
-		this.playerCharacter$ = this.characterService.listen('playerCharacter');
-		this.playerCharacter$
-			.pipe(takeUntil(this.unsubscribe$))
-			.subscribe((playerCharacter: PlayerCharacter) => {
-				this.playerCredits = playerCharacter.stats.credits;
-			});
+		this.draftableCards$ = this.abilityCardDraftService.listen('draftableCards');
+		this.playerCredits$ = this.characterService.listen('credits');
+		this.playerSkillPoints$ = this.characterService.listenToPlayerSkillPoints();
 	}
 
 	refreshAbilityCards() {
-		if (this.playerCredits >= 1) {
+		if (this.characterService.grab('credits') >= 1) {
 			this.characterService.adjustCredits(-1);
-			this.abilityCardDraftService.refreshDraftableCards(this.characterService.grab('playerCharacter'));
+			this.abilityCardDraftService.refreshDraftableCards(this.characterService.grabAbilityStats());
 		}
 	}
 

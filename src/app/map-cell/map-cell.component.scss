@@ -1,6 +1,6 @@
 :host {
-	height: 30px;
-	width: 30px;
+	height: 40px;
+	width: 40px;
 	margin: 2px;
 	display: flex;
 	justify-content: center;
@@ -10,8 +10,8 @@
 	position: relative;
 
 	&.map-cell--built {
-		height: 28px;
-		width: 28px;
+		height: 38px;
+		width: 38px;
 		border: 1px solid white;
 		cursor: pointer;
 		opacity: 1;

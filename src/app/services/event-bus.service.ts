@@ -13,4 +13,6 @@ export class EventBusService {
 	public playerCharacterLostHealth$ = new Subject();
 
 	public playerDied$ = new Subject();
+
+	public encounterStageCardsChanged$ = new Subject();
 }

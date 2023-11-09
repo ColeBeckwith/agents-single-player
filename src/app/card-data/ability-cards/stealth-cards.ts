@@ -1,8 +1,8 @@
-import { AbilityCard } from '../ability-cards';
+import { AbilityCard, AbilityCardId } from '../ability-cards';
 
 export const stealthCards: AbilityCard[] = [
 	{
-		id: 'sneak',
+		id: AbilityCardId.SNEAK,
 		title: 'Sneak',
 		primaryType: 'stealth',
 		rarity: 1,
@@ -10,7 +10,7 @@ export const stealthCards: AbilityCard[] = [
 		encounterValue: 2,
 	},
 	{
-		id: 'hidden-blade',
+		id: AbilityCardId.HIDDEN_BLADE,
 		title: 'Hidden Blade',
 		primaryType: 'stealth',
 		secondaryTypes: ['combat'],
@@ -19,7 +19,7 @@ export const stealthCards: AbilityCard[] = [
 		encounterValue: 2,
 	},
 	{
-		id: 'tiptoe',
+		id: AbilityCardId.TIPTOE,
 		title: 'Tiptoe',
 		primaryType: 'stealth',
 		rarity: 1,
@@ -28,7 +28,7 @@ export const stealthCards: AbilityCard[] = [
 		successText: 'Alert Level -1'
 	},
 	{
-		id: 'hide',
+		id: AbilityCardId.HIDE,
 		title: 'Hide',
 		primaryType: 'stealth',
 		rarity: 1,
@@ -38,7 +38,7 @@ export const stealthCards: AbilityCard[] = [
 		consumeText: 'Deactivate an encounter. +1 Stealth Skill Point. Can only be used if Stealth is strong for the Encounter.'
 	},
 	{
-		id: 'pickpocket',
+		id: AbilityCardId.PICKPOCKET,
 		title: 'Pickpocket',
 		primaryType: 'stealth',
 		rarity: 1,
@@ -47,7 +47,7 @@ export const stealthCards: AbilityCard[] = [
 		successText: '+1 Credit'
 	},
 	{
-		id: 'silencer',
+		id: AbilityCardId.SILENCER,
 		title: 'Silencer',
 		primaryType: 'stealth',
 		rarity: 2,
@@ -56,7 +56,7 @@ export const stealthCards: AbilityCard[] = [
 		encounterText: 'Negates negative alert level effects.',
 	},
 	{
-		id: 'lightfooted',
+		id: AbilityCardId.LIGHTFOOTED,
 		title: 'Light Footed',
 		primaryType: 'stealth',
 		rarity: 2,
@@ -65,7 +65,7 @@ export const stealthCards: AbilityCard[] = [
 		encounterText: '-1 Encounter Value for each equipment carried',
 	},
 	{
-		id: 'decoy',
+		id: AbilityCardId.DECOY,
 		title: 'Decoy',
 		primaryType: 'stealth',
 		rarity: 2,
@@ -75,7 +75,7 @@ export const stealthCards: AbilityCard[] = [
 		consumeText: 'Deactivate an encounter. Move to an adjacent square.'
 	},
 	{
-		id: 'recon',
+		id: AbilityCardId.RECON,
 		title: 'Recon',
 		primaryType: 'stealth',
 		rarity: 3,
@@ -85,7 +85,7 @@ export const stealthCards: AbilityCard[] = [
 		consumeText: 'Reveal all squares within 4 spaces.',
 	},
 	{
-		id: 'assassinate',
+		id: AbilityCardId.ASSASSINATE,
 		title: 'Assassinate',
 		primaryType: 'stealth',
 		rarity: 3,

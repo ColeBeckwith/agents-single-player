@@ -7,16 +7,24 @@
 		[class.ability-card-overlay--magic]="abilityCard.primaryType === 'magic'"
 	>
 		<div class="ability-card-encounter-value-display">
-			{{ abilityCard.encounterValue }}
+			<span *ngIf="abilityCard.hasOwnProperty('stagedValue')"
+					[class.ability-card-staged-value--improved]="abilityCard.stagedValue! > abilityCard.encounterValue"
+					[class.ability-card-staged-value--worsened]="abilityCard.stagedValue! < abilityCard.encounterValue">{{ abilityCard.stagedValue }}</span>
+			<span *ngIf="!abilityCard.hasOwnProperty('stagedValue')">{{ abilityCard.encounterValue }}</span>
 		</div>
 		<div class="ability-card-type-display">
 			<app-ability-type-icon [abilityType]="abilityCard.primaryType"></app-ability-type-icon>
-			<app-ability-type-icon *ngFor="let abilityType of abilityCard.secondaryTypes" [abilityType]="abilityType"></app-ability-type-icon>
+			<app-ability-type-icon
+				*ngFor="let abilityType of abilityCard.secondaryTypes"
+				[abilityType]="abilityType"
+			></app-ability-type-icon>
 		</div>
 		<b class="ability-card-title">{{ abilityCard.title }}</b>
 		<img class="ability-card-image" [src]="'../../assets/ability-cards/' + abilityCard.id + '.jpeg'" />
 
-		<span class="ability-card-text" *ngIf="abilityCard.encounterText"><b>Encounter:</b> {{ abilityCard.encounterText }}</span>
+		<span class="ability-card-text" *ngIf="abilityCard.encounterText"
+			><b>Encounter:</b> {{ abilityCard.encounterText }}</span
+		>
 		<span class="ability-card-text" *ngIf="abilityCard.consumeText"><b>Consume:</b> {{ abilityCard.consumeText }}</span>
 	</div>
 </div>

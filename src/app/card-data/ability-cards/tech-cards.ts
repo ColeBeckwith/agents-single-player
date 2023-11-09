@@ -1,8 +1,8 @@
-import { AbilityCard } from '../ability-cards';
+import { AbilityCard, AbilityCardId } from '../ability-cards';
 
 export const techCards: AbilityCard[] = [
 	{
-		id: 'hack',
+		id: AbilityCardId.HACK,
 		title: 'Hack',
 		primaryType: 'tech',
 		rarity: 1,
@@ -10,7 +10,7 @@ export const techCards: AbilityCard[] = [
 		encounterValue: 1,
 	},
 	{
-		id: 'spark',
+		id: AbilityCardId.SPARK,
 		title: 'Spark',
 		primaryType: 'tech',
 		rarity: 1,
@@ -19,7 +19,7 @@ export const techCards: AbilityCard[] = [
 		tags: ['Fire']
 	},
 	{
-		id: 'sonar',
+		id: AbilityCardId.SONAR,
 		title: 'Sonar',
 		primaryType: 'tech',
 		rarity: 1,
@@ -29,7 +29,7 @@ export const techCards: AbilityCard[] = [
 		consumeText: 'Reveal all squares within 3 spaces',
 	},
 	{
-		id: 'assembly',
+		id: AbilityCardId.ASSEMBLY,
 		title: 'Assembly',
 		primaryType: 'tech',
 		rarity: 1,
@@ -39,7 +39,7 @@ export const techCards: AbilityCard[] = [
 		consumeText: '-3 Credit cost for a random equipment in the shop.'
 	},
 	{
-		id: 'install-daemon',
+		id: AbilityCardId.INSTALL_DAEMON,
 		title: 'Install Daemon',
 		primaryType: 'tech',
 		rarity: 1,
@@ -49,7 +49,7 @@ export const techCards: AbilityCard[] = [
 		tags: ['Malware']
 	},
 	{
-		id: 'install-virus',
+		id: AbilityCardId.INSTALL_VIRUS,
 		title: 'Install Virus',
 		primaryType: 'tech',
 		rarity: 2,
@@ -59,7 +59,7 @@ export const techCards: AbilityCard[] = [
 		tags: ['Malware']
 	},
 	{
-		id: 'siphon',
+		id: AbilityCardId.SIPHON,
 		title: 'Siphon',
 		primaryType: 'tech',
 		rarity: 2,
@@ -68,7 +68,7 @@ export const techCards: AbilityCard[] = [
 		encounterText: 'Get Credits equal to the level of the encounter'
 	},
 	{
-		id: 'toolkit',
+		id: AbilityCardId.TOOLKIT,
 		title: 'Toolkit',
 		primaryType: 'tech',
 		rarity: 2,
@@ -77,7 +77,7 @@ export const techCards: AbilityCard[] = [
 		encounterText: '+1 Encounter Value for each unique piece of equipment.'
 	},
 	{
-		id: 'trojan-horse',
+		id: AbilityCardId.TROJAN_HORSE,
 		title: 'Trojan Horse',
 		primaryType: 'tech',
 		rarity: 2,
@@ -87,7 +87,7 @@ export const techCards: AbilityCard[] = [
 		tags: ['Malware']
 	},
 	{
-		id: 'adaptive-intrusion',
+		id: AbilityCardId.ADAPTIVE_INTRUSION,
 		title: 'Adaptive Intrusion',
 		primaryType: 'tech',
 		rarity: 2,
@@ -96,7 +96,7 @@ export const techCards: AbilityCard[] = [
 		encounterText: 'If successful, Adapative Intrusion permanently gets +1 Encounter Value.'
 	},
 	{
-		id: 'install-backdoor',
+		id: AbilityCardId.INSTALL_BACKDOOR,
 		title: 'Install Backdoor',
 		primaryType: 'tech',
 		rarity: 3,
@@ -106,7 +106,7 @@ export const techCards: AbilityCard[] = [
 		tags: ['Malware']
 	},
 	{
-		id: 'x-ray-vision',
+		id: AbilityCardId.X_RAY_VISION,
 		title: 'X-Ray Vision',
 		primaryType: 'tech',
 		rarity: 3,

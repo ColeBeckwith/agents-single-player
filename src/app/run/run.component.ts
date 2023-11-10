@@ -15,6 +15,7 @@ import { SubscriberComponent } from '../subscriber/subscriber.component';
 export class RunComponent extends SubscriberComponent {
 	public abilityCardDrafting$: Observable<boolean>;
 	public encounterPhase$: Observable<boolean>;
+	public lootPhase$: Observable<boolean>;
 
 	constructor(
 		private phaseService: PhaseService,
@@ -29,6 +30,7 @@ export class RunComponent extends SubscriberComponent {
 			'abilityCardDrafting'
 		);
 		this.encounterPhase$ = this.phaseService.listen('encounter');
+		this.lootPhase$ = this.phaseService.listen('loot');
 		this.eventBusService.playerDied$
 			.pipe(takeUntil(this.unsubscribe$))
 			.subscribe(() => {

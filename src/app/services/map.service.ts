@@ -119,8 +119,9 @@ export class MapService extends RocXService {
 		buildDensity: number = 0.3,
 		encounterDensity: number = 0.6,
 		encounterDifficultyModifier: number = 0,
-		lootDensity: number = 0.1,
-		boonDensity: number = 0.1
+		numberOfLoots = 3,
+		numberOfBoons = 2,
+		numberOfRefreshes = 1
 	) {
 		const builtMap = this.mapGenerationService.generateMapV2(height, width, buildDensity);
 
@@ -130,9 +131,9 @@ export class MapService extends RocXService {
 			width,
 			encounterDensity,
 			encounterDifficultyModifier,
-			lootDensity,
-			boonDensity,
-			1
+			numberOfLoots,
+			numberOfBoons,
+			numberOfRefreshes
 		);
 		this.set('currentMap', builtMapWithFeatures);
 	}
@@ -146,6 +147,11 @@ export class MapService extends RocXService {
 			cellContainingEncouter.encounter = false;
 			this.updateCellsInCurrentMap([cellContainingEncouter]);
 		}
+	}
+
+	public addMovementPoints(pointsToAdd: number) {
+		const movementPoints = this.grab('movementPoints');
+		this.set('movementPoints', movementPoints + pointsToAdd);
 	}
 
 	private updateCellsInCurrentMap(cells: Cell[]) {

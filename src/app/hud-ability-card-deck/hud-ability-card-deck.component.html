@@ -19,6 +19,7 @@
 							*ngFor="let abilityCard of abilityCardHand$ | async"
 							[abilityCard]="abilityCard"
 							class="hud-ability-card-deck-card"
+							(consume)="consumeAbilityCard(abilityCard)"
 							cdkDrag
 						>
 						</app-ability-card>
@@ -30,6 +31,7 @@
 							*ngFor="let abilityCard of abilityCardDraw$ | async"
 							[abilityCard]="abilityCard"
 							class="hud-ability-card-deck-card"
+							(consume)="consumeAbilityCard(abilityCard)"
 						>
 						</app-ability-card>
 					</div>
@@ -39,6 +41,7 @@
 						<app-ability-card
 							*ngFor="let abilityCard of abilityCardDiscard$ | async"
 							[abilityCard]="abilityCard"
+							[discarded]="true"
 							class="hud-ability-card-deck-card hud-ability-card-deck-card--discard"
 						>
 						</app-ability-card>

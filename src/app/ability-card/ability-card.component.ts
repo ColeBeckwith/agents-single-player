@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 
 import { AbilityCard } from '../card-data/ability-cards';
 
@@ -10,4 +10,9 @@ import { AbilityCard } from '../card-data/ability-cards';
 export class AbilityCardComponent {
 
 	@Input() abilityCard: AbilityCard;
+
+	@Input() discarded: boolean = false;
+
+	@Output() consume = new EventEmitter();
+
 }

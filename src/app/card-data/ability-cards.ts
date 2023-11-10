@@ -45,6 +45,7 @@ export enum AbilityCardId {
 	SNEAK = 'sneak',
 	SONAR = 'sonar',
 	SPARK = 'spark',
+	STASH = 'stash',
 	STOP = 'stop',
 	SUMMONING_RITUAL = 'summoning-ritual',
 	SUPRESSION = 'suppression',

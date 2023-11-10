@@ -27,4 +27,7 @@
 		>
 		<span class="ability-card-text" *ngIf="abilityCard.consumeText"><b>Consume:</b> {{ abilityCard.consumeText }}</span>
 	</div>
+	<div *ngIf="!discarded && abilityCard.consumable" class="ability-card-consume-button-container">
+		<button mat-stroked-button color="primary" (click)="consume.emit()">Consume</button>
+	</div>
 </div>

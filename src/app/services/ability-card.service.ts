@@ -81,7 +81,7 @@ export class AbilityCardService extends RocXService {
 		this.set('abilityCardDraw', abilityCardDraw);
 	}
 
-	public discardAbilityCard(abilityCardToDiscard: AbilityCard) {
+	public discardAbilityCardFromDraw(abilityCardToDiscard: AbilityCard) {
 		const abilityCardDraw: AbilityCard[] = this.grab('abilityCardDraw');
 		const abilityCardDiscard: AbilityCard[] = this.grab('abilityCardDiscard');
 		const indexOfCardToDiscard = abilityCardDraw.findIndex(
@@ -91,6 +91,20 @@ export class AbilityCardService extends RocXService {
 			abilityCardDraw.splice(indexOfCardToDiscard, 1);
 			abilityCardDiscard.push(abilityCardToDiscard);
 			this.set('abilityCardDraw', abilityCardDraw);
+			this.set('abilityCardDiscard', abilityCardDiscard);
+		}
+	}
+
+	public discardAbilityCardFromHand(abilityCardToDiscard: AbilityCard) {
+		const abilityCardHand: AbilityCard[] = this.grab('abilityCardHand');
+		const abilityCardDiscard: AbilityCard[] = this.grab('abilityCardDiscard');
+		const indexOfCardToDiscard = abilityCardHand.findIndex(
+			(abilityCardInHand) => abilityCardInHand.mint === abilityCardToDiscard.mint
+		);
+		if (indexOfCardToDiscard !== -1) {
+			abilityCardHand.splice(indexOfCardToDiscard, 1);
+			abilityCardDiscard.push(abilityCardToDiscard);
+			this.set('abilityCardHand', abilityCardHand);
 			this.set('abilityCardDiscard', abilityCardDiscard);
 		}
 	}
@@ -131,7 +145,7 @@ export class AbilityCardService extends RocXService {
 				// Default behavior is to add to the end.
 				abilityCardHand.push(cardToMove);
 			}
-			this.set('abilityCardDraw', abilityCardHand);
+			this.set('abilityCardHand', abilityCardHand);
 			this.eventBusService.encounterStageCardsChanged$.next({});
 		}
 	}

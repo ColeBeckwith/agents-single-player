@@ -43,6 +43,7 @@ import { AlertLevelService } from './services/alert-level.service';
 import { EncounterResolutionService } from './services/encounter-resolution.service';
 import { SkillTypeToDisplayPipe } from './skill-type-to-display/skill-type-to-display.pipe';
 import { SubscriberComponent } from './subscriber/subscriber.component';
+import { LootOfferComponent } from './loot-offer/loot-offer.component';
 
 @NgModule({
 	declarations: [
@@ -75,6 +76,7 @@ import { SubscriberComponent } from './subscriber/subscriber.component';
 		EncounterTableComponent,
 		EncounterCardComponent,
 		DevToolComponent,
+  LootOfferComponent,
 	],
 	imports: [
 		BrowserModule,

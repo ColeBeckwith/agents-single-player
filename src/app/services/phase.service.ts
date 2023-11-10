@@ -12,6 +12,7 @@ export class PhaseService extends RocXService {
 			movement: false,
 			encounter: false,
 			alertLevel: false,
+			loot: false
 		});
 	}
 

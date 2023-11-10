@@ -2,6 +2,7 @@
 
 :host {
 	color: black;
+	position: relative;
 }
 
 .ability-card {
@@ -98,4 +99,12 @@
 
 .ability-card-staged-value--worsened {
 	color: #FF3131;
+}
+
+.ability-card-consume-button-container {
+	position: absolute;
+	bottom: 8px;
+	width: 100%;
+	display: flex;
+	justify-content: center;
 }

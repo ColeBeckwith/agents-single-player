@@ -47,6 +47,16 @@ export const stealthCards: AbilityCard[] = [
 		successText: '+1 Credit'
 	},
 	{
+		id: AbilityCardId.STASH,
+		title: 'Stash',
+		primaryType: 'stealth',
+		rarity: 2,
+		cost: 7,
+		encounterValue: 1,
+		consumable: true,
+		consumeText: '+5 Stealth Points'
+	},
+	{
 		id: AbilityCardId.SILENCER,
 		title: 'Silencer',
 		primaryType: 'stealth',

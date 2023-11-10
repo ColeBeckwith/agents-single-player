@@ -117,15 +117,10 @@ export class MapGenerationService {
 		width: number,
 		encounterDensity: number,
 		encounterDifficultyModifier: number,
-		lootDensity: number,
-		boonDensity: number,
+		numberOfLoots: number,
+		numberOfBoons: number,
 		numberOfRefreshes: number
 	) {
-		if (encounterDensity + lootDensity + boonDensity > 1) {
-			console.error(
-				'Invalid Map Request: Encounter Density, Loot Density and Boon Density combined are greater than 100%.'
-			);
-		}
 		const allBuiltCells = this.mapUtilitiesService.getAllBuiltCellsInMap(map);
 		const startingCell = <Cell>allBuiltCells.find((cell) => cell.start);
 
@@ -146,7 +141,7 @@ export class MapGenerationService {
 		let unassignedCells = allBuiltCells.filter((cell) => !cell.assigned);
 
 		for (let i = 0; i < numberOfRefreshes; i++) {
-			const desiredRefreshDistance = (((height + width) / 2) * (i + 1)) / (numberOfRefreshes + 1);
+			const desiredRefreshDistance = (desiredExitDistance * (i + 1)) / (numberOfRefreshes + 1);
 			unassignedCells.sort(
 				(a, b) =>
 					Math.abs(a.distanceToStart - desiredRefreshDistance) - Math.abs(b.distanceToStart - desiredRefreshDistance)
@@ -158,19 +153,41 @@ export class MapGenerationService {
 
 		unassignedCells = unassignedCells.filter((cell) => !cell.assigned);
 
-		// Assign encounter, loot and boons to unassigned cells.
-		const chanceSchedule = [
-			encounterDensity,
-			encounterDensity + lootDensity,
-			encounterDensity + lootDensity + boonDensity,
-		];
+		const lootRaritySchedule = [0, 0.9];
+
+		for (let i = 0; i < numberOfLoots; i++) {
+			const desiredLootDistance = (desiredExitDistance * (i + 1)) / (numberOfLoots + 1);
+			unassignedCells.sort(
+				(a, b) =>
+					Math.abs(a.distanceToStart - desiredLootDistance) - Math.abs(b.distanceToStart - desiredLootDistance)
+			);
+			const lootCell = unassignedCells[0];
+			lootCell.loot = true;
+			lootCell.assigned = true;
+			const chanceForLootRarity = Math.random();
+			lootCell.lootRarity = lootRaritySchedule.filter((tier) => tier < chanceForLootRarity).length;
+		}
+
+		unassignedCells = unassignedCells.filter((cell) => !cell.assigned);
+
+		for (let i = 0; i < numberOfBoons; i++) {
+			const desiredBoonDistance = (desiredExitDistance * (i + 1)) / (numberOfBoons + 1);
+			unassignedCells.sort(
+				(a, b) =>
+					Math.abs(a.distanceToStart - desiredBoonDistance) - Math.abs(b.distanceToStart - desiredBoonDistance)
+			);
+			const boonCell = unassignedCells[0];
+			boonCell.boon = true;
+			boonCell.assigned = true;
+		}
+
+		unassignedCells = unassignedCells.filter((cell) => !cell.assigned);
 
 		const encounterDifficultySchedule = [0, 1, 2, 3];
-		const lootRaritySchedule = [0, 0.9];
 		unassignedCells.forEach((unassignedCell) => {
 			const chanceForAssignment = Math.random();
 
-			if (chanceForAssignment < chanceSchedule[0]) {
+			if (chanceForAssignment < encounterDensity) {
 				unassignedCell.encounter = true;
 				// Use half of the boards dimensions so that we end up easier encounters at the beginning of the map and more difficult ones at the end.
 				// const chanceForEncounterDifficulty = Math.random() * (unassignedCell.distanceToStart / ((height + width) / 3));
@@ -182,12 +199,6 @@ export class MapGenerationService {
 				unassignedCell.assignedEncounter = this.encounterCardService.getRandomEncounterCard(
 					unassignedCell.encounterDifficulty
 				);
-			} else if (chanceForAssignment < chanceSchedule[1]) {
-				unassignedCell.loot = true;
-				const chanceForLootRarity = Math.random();
-				unassignedCell.lootRarity = lootRaritySchedule.filter((tier) => tier < chanceForLootRarity).length;
-			} else if (chanceForAssignment < chanceSchedule[2]) {
-				unassignedCell.boon = true;
 			}
 
 			unassignedCell.assigned = true;
